@@ -5,7 +5,7 @@ import Register from '../../ui/begin/Register';
 import ForgotPass from '../../ui/begin/ForgotPass';
 import VerifyCode from '../../ui/begin/Verify';
 import NewPass from '../../ui/begin/NewPass';
-import Home from '../../ui/main/Home';
+import Home from '../../ui/main/user/Home';
 import Test from '../../ui/test/Test';
 import ListStation from '../../ui/main/admin/ListStation';
 
@@ -21,7 +21,7 @@ const Navigator = () => {
             <Route path='/newPass' element={<NewPass />} />
 
             <Route path='/test' element={<Test />} />
-            <Route path='/ListStation' element={<ListStation />} />
+            <Route path='/liststation' element={<ListStation />} />
         </Routes>
     );
 }

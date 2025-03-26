@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ApiAlert from '../../components/alert/ApiAlert';
+import ApiAlert from '../../../components/alert/ApiAlert';
 
 const Home = () => {
 

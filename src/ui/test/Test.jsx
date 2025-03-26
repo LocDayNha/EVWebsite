@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import AxiosInstance from '../../components/util/AxiosInstance';
+import Select from "react-select";
 
 const Test = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [sortConfig, setSortConfig] = useState(null);
 
     const [dataStation, setDataStation] = useState([]);
-
-    const data = [
-        { name: 'Apple MacBook Pro 17"', color: 'Silver', category: 'Laptop', price: 2999, image: 'https://i.pinimg.com/736x/bf/9a/54/bf9a544515ca8361301bd5821af937b5.jpg' },
-        { name: 'Microsoft Surface Pro', color: 'White', category: 'Laptop PC', price: 1999, image: 'https://i.pinimg.com/736x/bf/9a/54/bf9a544515ca8361301bd5821af937b5.jpg' },
-        { name: 'Magic Mouse 2', color: 'Black', category: 'Accessories', price: 99, image: 'https://i.pinimg.com/736x/bf/9a/54/bf9a544515ca8361301bd5821af937b5.jpg' }
-    ];
 
     const getDataStation = async () => {
         try {
@@ -31,7 +26,7 @@ const Test = () => {
         item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.time.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.access.toString().includes(searchTerm)
+        item.brand_id.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const sortedData = [...filteredData];
@@ -150,8 +145,8 @@ const Test = () => {
                                     </div>
                                 </div>
                             </th>
-                            <th scope="col" className="px-6 py-3" onClick={() => requestSort('access')}>
-                                <div className="flex items-center justify-center">
+                            <th scope="col" className="px-6 py-3">
+                                <div className="flex items-center justify-center" onClick={() => requestSort('brand_id')}>
                                     Hãng trạm sạc
                                     <div>
                                         <svg className="w-3 h-3 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
@@ -160,7 +155,7 @@ const Test = () => {
                                     </div>
                                 </div>
                             </th>
-                            <th scope="col" className="px-6 py-3" onClick={() => requestSort('access')}>
+                            <th scope="col" className="px-6 py-3">
                                 <div className="flex items-center justify-center">
                                     Nơi đặt trạm sạc
                                     <div>
@@ -170,7 +165,7 @@ const Test = () => {
                                     </div>
                                 </div>
                             </th>
-                            <th scope="col" className="px-6 py-3" onClick={() => requestSort('access')}>
+                            <th scope="col" className="px-6 py-3">
                                 <div className="flex items-center justify-center">
                                     Trụ sạc
                                     <div>
@@ -180,7 +175,7 @@ const Test = () => {
                                     </div>
                                 </div>
                             </th>
-                            <th scope="col" className="px-6 py-3" onClick={() => requestSort('access')}>
+                            <th scope="col" className="px-6 py-3">
                                 <div className="flex items-center justify-center">
                                     Dịch vụ
                                     <div>
@@ -190,17 +185,7 @@ const Test = () => {
                                     </div>
                                 </div>
                             </th>
-                            <th scope="col" className="px-6 py-3" onClick={() => requestSort('access')}>
-                                <div className="flex items-center justify-center">
-                                    Hoạt động
-                                    <div>
-                                        <svg className="w-3 h-3 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
-                                        </svg>
-                                    </div>
-                                </div>
-                            </th>
-                            <th scope="col" className="px-6 py-3" onClick={() => requestSort('access')}>
+                            <th scope="col" className="px-6 py-3">
                                 <div className="flex items-center justify-center">
                                     Ghi chú
                                     <div>
@@ -215,32 +200,99 @@ const Test = () => {
                             </th>
                         </tr>
                     </thead>
+
                     <tbody>
                         {sortedData.map((item, index) => (
-                            <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+                            < tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200" >
                                 <td className="pl-4 py-4">
                                     <img src={item.image} className="w-80 h-50 object-cover" />
                                 </td>
-                                <td scope="row" className="text-center pl-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <td scope="row" className="w-32 text-center pl-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {item.name}
                                 </td>
-                                <td className="pl-6 py-4 text-center w-60">{item.location}</td>
-                                <td className="py-4 text-center">{item.time}</td>
-                                <td className="py-4 text-center">{item.brand_id.name}</td>
-                                <td className="py-4 text-center">{item.address.name}</td>
-                                <td className="py-4 text-center">{item.note ? item.note : 'null'}</td>
-                                <td className="py-4 text-center">{item.note ? item.note : 'null'}</td>
-                                <td className="py-4 text-center">{item.note ? item.note : 'null'}</td>
-                                <td className="py-4 text-center">{item.note ? item.note : 'null'}</td>
+                                <td className="pl-6 py-4 text-center w-60 font-medium text-gray-900 dark:text-white">{item.location}</td>
+                                <td className="py-4 text-center font-medium text-gray-900 dark:text-white">{item.time}</td>
+                                <td className="py-4 text-center font-medium text-gray-900 dark:text-white">{item.brand_id.name}</td>
+                                <td className="py-4 text-center font-medium text-gray-900 dark:text-white">{item.address.name}</td>
+                                <td className="py-4">
+                                    <Select
+                                        options={item.specification.map(specification => ({
+                                            value: specification.specification_id._id,
+                                            label: (
+                                                <div>
+                                                    <div className='flex flex-row'>
+                                                        <div className='font-medium text-gray-900 dark:text-white'>{specification.specification_id.port_id.type}-</div>
+                                                        <div className='font-medium text-gray-900 dark:text-white'>{specification.specification_id.port_id.name}</div>
+                                                    </div>
+                                                    <div className='font-medium text-gray-900 dark:text-white'>Công suất: {specification.specification_id.kw} kw</div>
+                                                    <div className='font-medium text-gray-900 dark:text-white'>Giá: {specification.specification_id.price.toLocaleString("vi-VN", { style: "currency", currency: "VND" })}</div>
+                                                    <div className='font-medium text-gray-900 dark:text-white'>Cổng sạc: {specification.specification_id.slot}</div>
+                                                </div>
+                                            ),
+                                            image: specification.specification_id.port_id.image,
+                                        }))}
+                                        isSearchable={false}
+                                        value={null}
+                                        getOptionLabel={(e) => (
+                                            <div className="flex items-center w-70">
+                                                <img src={e.image} alt={e.label} className="w-12 h-12 mr-2" />
+                                                {e.label}
+                                            </div>
+                                        )}
+                                        styles={{
+                                            menu: (base) => ({ ...base, zIndex: 9999, width: 200 }),
+                                            menuList: (base) => ({
+                                                ...base,
+                                                overflow: "hidden",
+                                            }),
+                                            option: (base, state) => ({
+                                                ...base,
+                                                backgroundColor: state.isFocused ? "transparent" : base.backgroundColor,
+                                            }),
+                                        }}
+                                        placeholder={item.specification.length + ' trụ sạc'}
+                                    />
+                                </td>
+                                <td className="pl-6 py-4 text-center">
+                                    <Select
+                                        options={item.service.map(service => ({
+                                            value: service.service_id._id,
+                                            label: service.service_id.name,
+                                            image: service.service_id.image
+                                        }))}
+                                        isSearchable={false}
+                                        value={null}
+                                        getOptionLabel={(e) => (
+                                            <div className="flex items-center w-30 font-medium text-gray-900 dark:text-white">
+                                                <img src={e.image} alt={e.label} className="w-6 h-6 mr-2" />
+                                                {e.label}
+                                            </div>
+                                        )}
+                                        styles={{
+                                            menu: (base) => ({ ...base, zIndex: 9999, width: 160 }),
+                                            menuList: (base) => ({
+                                                ...base,
+                                                overflow: "hidden",
+                                            }),
+                                            option: (base, state) => ({
+                                                ...base,
+                                                backgroundColor: state.isFocused ? "transparent" : base.backgroundColor,
+                                            }),
+                                        }}
+                                        placeholder={item.service.length + ' dịch vụ'}
+                                    />
+                                </td>
+                                <td className="py-4 text-center font-medium text-gray-900 dark:text-white">{item.note ? item.note : 'Không có'}</td>
                                 <td className="px-6 py-4 text-right">
                                     <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                                 </td>
                             </tr>
+
                         ))}
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div >
     );
 };
 

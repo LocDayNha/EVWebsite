@@ -26,11 +26,10 @@ const Station = ({ data }) => {
             <table className="w-full border-collapse border border-gray-300">
                 <thead>
                     <tr className="bg-gray-200">
-                        <th className="border border-gray-300 px-4 py-2">Người tạo</th>
+                        <th className="border border-gray-300 px-4 py-2"></th>
                         <th className="border border-gray-300 px-4 py-2">Tên trạm</th>
-                        <th className="border border-gray-300 px-4 py-2">Hãng trạm sạc</th>
-                        <th className="border border-gray-300 px-4 py-2">Vị trí</th>
-                        <th className="border border-gray-300 px-4 py-2">Quyền truy cập</th>
+                        <th className="border border-gray-300 px-4 py-2 w-40">Hãng trạm sạc</th>
+                        <th className="border border-gray-300 px-4 py-2 w-85">Vị trí</th>
                         <th className="border border-gray-300 px-4 py-2">Giờ hoạt động</th>
 
                         <th className="border border-gray-300 px-4 py-2 w-50">Số lượng trụ sạc</th>
@@ -65,13 +64,12 @@ const Station = ({ data }) => {
                             return (
                                 <React.Fragment key={station._id}>
                                     <tr className="border border-gray-300">
-                                        <td className="border border-gray-300 px-4 py-2">{station.user_id.name}</td>
+                                        <td className="border border-gray-300 px-4 py-2">{station.name}</td>
                                         <td className="border border-gray-300 px-4 py-2">{station.name}</td>
                                         <td className="border border-gray-300 px-4 py-2">{station.brand_id.name}</td>
                                         <td className="border border-gray-300 px-4 py-2">{station.location}</td>
-                                        <td className="border border-gray-300 px-4 py-2">{station.access}</td>
                                         <td className="border border-gray-300 px-4 py-2">{station.time}</td>
-                                       
+
                                         {/* Dropdown Trụ Sạc */}
                                         <td className="border border-gray-300 px-4 py-2 relative text-center align-middle">
                                             <Select
@@ -80,13 +78,16 @@ const Station = ({ data }) => {
                                                 value={selectedCharger[station._id] || null}
                                                 getOptionLabel={(e) => (
                                                     <div className="flex items-center">
-                                                        <img src={e.image} alt={e.label} className="w-6 h-6 rounded-full mr-2" />
+                                                        <img src={e.image} alt={e.label} className="w-12 h-12" />
                                                         {e.label}
                                                     </div>
                                                 )}
                                                 // onChange={(selected) => setSelectedCharger({ ...selectedCharger, [station._id]: selected })}
                                                 menuPortalTarget={document.body}
-                                                styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999, }) }}
+                                                styles={{
+                                                    menuPortal: (base) => ({ ...base, zIndex: 9999, width: 340, }),
+                                                    menu: (abcd) => ({ ...abcd, overflow: 'hidden', scrollbarWidth: 'none', msOverflowStyle: 'none' })
+                                                }}
                                                 placeholder={station.specification.length + ' trụ sạc'}
                                             />
                                         </td>
@@ -97,15 +98,15 @@ const Station = ({ data }) => {
                                                 options={serviceOptions}
                                                 isSearchable={false}
                                                 menuPortalTarget={document.body}
-                                                value={selectedService[station._id] || null}
+                                                value={null}
                                                 getOptionLabel={(e) => (
                                                     <div className="flex items-center">
-                                                        <img src={e.image} alt={e.label} className="w-6 h-6 rounded-full mr-2" />
+                                                        <img src={e.image} alt={e.label} className="w-6 h-6 mr-2" />
                                                         {e.label}
                                                     </div>
                                                 )}
                                                 styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
-                                                placeholder="Danh sách dịch vụ"
+                                                placeholder="Dịch vụ"
                                             />
 
                                         </td>
