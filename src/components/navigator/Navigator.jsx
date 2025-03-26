@@ -6,8 +6,8 @@ import ForgotPass from '../../ui/begin/ForgotPass';
 import VerifyCode from '../../ui/begin/Verify';
 import NewPass from '../../ui/begin/NewPass';
 import Home from '../../ui/main/Home';
+import Test from '../../ui/test/Test';
 import ListStation from '../../ui/main/admin/ListStation';
-import ApiAlert from '../alert/ApiAlert';
 
 const Navigator = () => {
     return (
@@ -20,6 +20,7 @@ const Navigator = () => {
             <Route path='/verify' element={<VerifyCode />} />
             <Route path='/newPass' element={<NewPass />} />
 
+            <Route path='/test' element={<Test />} />
             <Route path='/ListStation' element={<ListStation />} />
         </Routes>
     );
