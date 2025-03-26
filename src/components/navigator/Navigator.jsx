@@ -6,6 +6,7 @@ import ForgotPass from '../../ui/begin/ForgotPass';
 import VerifyCode from '../../ui/begin/Verify';
 import NewPass from '../../ui/begin/NewPass';
 import Home from '../../ui/main/Home';
+import ListStation from '../../ui/main/admin/ListStation';
 import ApiAlert from '../alert/ApiAlert';
 
 const Navigator = () => {
@@ -13,12 +14,13 @@ const Navigator = () => {
         <Routes>
             <Route path='/' element={<Navigate to='/home' />} />
             <Route path='/home' element={<Home />} />
-
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/forgotPass' element={<ForgotPass />} />
             <Route path='/verify' element={<VerifyCode />} />
             <Route path='/newPass' element={<NewPass />} />
+
+            <Route path='/ListStation' element={<ListStation />} />
         </Routes>
     );
 }
