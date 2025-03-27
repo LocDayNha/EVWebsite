@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate, Link } from "react-router-dom";
 import imgBg from '../../assets/image/begin/register/bg.png';
+import imgLogo from '../../assets/image/logo/logo.png';
 import TextInputEmail from '../../components/textinput/Email';
 import TextInputPassword from '../../components/textinput/Pasword';
 import Button from '../../components/button/Button';
@@ -127,7 +128,9 @@ const Register = () => {
                 </div>
 
                 <div className="w-3/5 p-6 flex flex-col items-center">
-                    <div className="w-16 h-16 bg-gray-300 rounded-full mb-4"></div>
+                    <div className="w-26 h-26 bg-gray-100 rounded-full mb-4">
+                        <img src={imgLogo} className="w-26 h-26" />
+                    </div>
                     <h2 className="text-2xl font-semibold mb-6">Tạo tài khoản</h2>
 
                     <TextInputEmail title='Email' onChange={e => setEmail(e.target.value)} checkValidation={checkValidationEmail} />
