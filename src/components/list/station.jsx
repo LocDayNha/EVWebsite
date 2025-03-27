@@ -1,133 +1,281 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Select from "react-select";
 
-const getStatusLabel = (isActive) => {
-    switch (isActive) {
-        case 1:
-            return { text: "Chờ", color: "bg-yellow-300 text-white" };
-        case 2:
-            return { text: "Đang hoạt động", color: "bg-green-300 text-white" };
-        case 3:
-            return { text: "Bị hủy", color: "bg-red-400 text-white" };
-        case 4:
-            return { text: "Tạm dừng hoạt động", color: "bg-gray-400 text-white" };
-        default:
-            return { text: "Không xác định", color: "bg-gray-200 text-black" };
-    }
-};
+const Station = ({ data, search, number, isPaused, setIsPaused }) => {
 
-const Station = ({ data }) => {
-    const [selectedCharger, setSelectedCharger] = useState({});
-    const [selectedService, setSelectedService] = useState({});
+    const [textSearch, setTextSearch] = useState(null);
+    const [paused, setPaused] = useState(isPaused);
+
+    const logData = () => {
+        console.log('paused:',paused);
+    }
+
+    useEffect(() => {
+        if (textSearch) {
+            search(textSearch);
+        }else{
+            console.log('Không có KEY');
+        }
+    }, [textSearch])
 
     return (
-        <div className="p-4 border rounded-lg shadow-lg">
-            <h2 className="text-xl font-bold mb-4">Danh sách trạm sạc</h2>
-            <table className="w-full border-collapse border border-gray-300">
-                <thead>
-                    <tr className="bg-gray-200">
-                        <th className="border border-gray-300 px-4 py-2"></th>
-                        <th className="border border-gray-300 px-4 py-2">Tên trạm</th>
-                        <th className="border border-gray-300 px-4 py-2 w-40">Hãng trạm sạc</th>
-                        <th className="border border-gray-300 px-4 py-2 w-85">Vị trí</th>
-                        <th className="border border-gray-300 px-4 py-2">Giờ hoạt động</th>
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" className="px-6 py-3">
+                        <div className="flex items-center">
+                        </div>
+                    </th>
+                    <th scope="col" className="pl-6 py-3 text-center" onClick={() => setTextSearch('name')}>
+                        <div className="flex items-center justify-center">
+                            Tên trạm
+                            <div>
+                                <svg className="w-3 h-3 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" className="px-6 py-3" onClick={() => setTextSearch('location')}>
+                        <div className="flex items-center justify-center">
+                            Địa chỉ
+                            <div>
+                                <svg className="w-3 h-3 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" className="px-6 py-3" onClick={() => setTextSearch('time')}>
+                        <div className="flex items-center justify-center">
+                            Thời gian
+                            <div>
+                                <svg className="w-3 h-3 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" className="px-6 py-3" onClick={() => setTextSearch('brand_id.name')}>
+                        <div className="flex items-center justify-center">
+                            Hãng trạm sạc
+                            <div>
+                                <svg className="w-3 h-3 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" className="px-6 py-3" onClick={() => setTextSearch('address.name')}>
+                        <div className="flex items-center justify-center">
+                            Nơi đặt trạm sạc
+                            <div>
+                                <svg className="w-3 h-3 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                        <div className="flex items-center justify-center">
+                            Trụ sạc
+                        </div>
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                        <div className="flex items-center justify-center">
+                            Dịch vụ
+                        </div>
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                        <div className="flex items-center justify-center">
+                            Ghi chú
+                        </div>
+                    </th>
+                    {number === 2 || number === 3 ?
+                        <>
+                            <th scope="col" className="px-6 py-3">
+                                <div className="flex items-center justify-center">
+                                    Hoạt động
+                                </div>
+                            </th>
+                        </>
+                        :
+                        null
+                    }
 
-                        <th className="border border-gray-300 px-4 py-2 w-50">Số lượng trụ sạc</th>
-                        <th className="border border-gray-300 px-4 py-2 w-50">Dịch vụ</th>
-                        <th className="border border-gray-300 px-4 py-2">Trạng thái</th>
+                    <th scope="col" className="px-6 py-3">
+                        <span className="sr-only">Sửa</span>
+                    </th>
+                    {number === 1 ?
+                        <>
+                            <th scope="col" className="px-6 py-3">
+                                <span className="sr-only">Chấp nhận</span>
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                <span className="sr-only">Từ chối</span>
+                            </th>
+                        </>
+                        :
+                        null
+                    }
+                </tr>
+            </thead>
+
+            <tbody>
+                {data.length === 0 ? (
+                    <tr>
+                        <td colSpan="10" className="text-center py-4 text-gray-900 dark:text-white">
+                            Không có dữ liệu
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    {data.length > 0 ? (
-                        data.map((station) => {
-                            const statusInfo = getStatusLabel(station.isActive);
+                ) : (
+                    data.map((item, index) => (
 
-                            // Danh sách trụ sạc cho dropdown
-                            const chargerOptions = station.specification.map((charger) => ({
-                                value: charger.specification_id._id,
-                                label: `
-                                ${charger.specification_id.port_id.name} 
-                                 ${charger.specification_id.kw}kW 
-                                  ${charger.specification_id.price.toLocaleString("vi-VN", { style: "currency", currency: "VND" })} 
-                                   Cổng sạc ${charger.specification_id.slot}
-                                   `,
-                                image: charger.specification_id.port_id.image,
-                            }));
-
-                            // Danh sách dịch vụ cho dropdown
-                            const serviceOptions = station.service.map((service) => ({
-                                value: service.service_id.name,
-                                label: service.service_id.name,
-                                image: service.service_id.image,
-                            }));
-
-                            return (
-                                <React.Fragment key={station._id}>
-                                    <tr className="border border-gray-300">
-                                        <td className="border border-gray-300 px-4 py-2">{station.name}</td>
-                                        <td className="border border-gray-300 px-4 py-2">{station.name}</td>
-                                        <td className="border border-gray-300 px-4 py-2">{station.brand_id.name}</td>
-                                        <td className="border border-gray-300 px-4 py-2">{station.location}</td>
-                                        <td className="border border-gray-300 px-4 py-2">{station.time}</td>
-
-                                        {/* Dropdown Trụ Sạc */}
-                                        <td className="border border-gray-300 px-4 py-2 relative text-center align-middle">
-                                            <Select
-                                                options={chargerOptions}
-                                                isSearchable={false}
-                                                value={selectedCharger[station._id] || null}
-                                                getOptionLabel={(e) => (
-                                                    <div className="flex items-center">
-                                                        <img src={e.image} alt={e.label} className="w-12 h-12" />
-                                                        {e.label}
-                                                    </div>
-                                                )}
-                                                // onChange={(selected) => setSelectedCharger({ ...selectedCharger, [station._id]: selected })}
-                                                menuPortalTarget={document.body}
-                                                styles={{
-                                                    menuPortal: (base) => ({ ...base, zIndex: 9999, width: 340, }),
-                                                    menu: (abcd) => ({ ...abcd, overflow: 'hidden', scrollbarWidth: 'none', msOverflowStyle: 'none' })
-                                                }}
-                                                placeholder={station.specification.length + ' trụ sạc'}
-                                            />
-                                        </td>
-
-                                        {/* Dropdown Dịch Vụ */}
-                                        <td className="border border-gray-300 px-4 py-2 relative">
-                                            <Select
-                                                options={serviceOptions}
-                                                isSearchable={false}
-                                                menuPortalTarget={document.body}
-                                                value={null}
-                                                getOptionLabel={(e) => (
-                                                    <div className="flex items-center">
-                                                        <img src={e.image} alt={e.label} className="w-6 h-6 mr-2" />
-                                                        {e.label}
-                                                    </div>
-                                                )}
-                                                styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
-                                                placeholder="Dịch vụ"
-                                            />
-
-                                        </td>
-
-                                        <td className={`border border-gray-300 px-4 py-2 text-center font-semibold ${statusInfo.color}`}>
-                                            {statusInfo.text}
-                                        </td>
-                                    </tr>
-                                </React.Fragment>
-                            );
-                        })
-                    ) : (
-                        <tr>
-                            <td colSpan={9} className="text-center py-4">
-                                Không có trạm sạc nào
+                        <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+                            <td className="pl-4 py-4">
+                                <img src={item.image} className="w-80 h-50 object-cover" />
                             </td>
+                            <td className="text-center pl-6 py-4 w-50 font-medium text-gray-900 dark:text-white" onClick={logData}>
+                                {item.name}
+                            </td>
+                            <td className="pl-6 py-4 text-center w-60 font-medium text-gray-900 dark:text-white">
+                                {item.location}
+                            </td>
+                            <td className="py-4 text-center font-medium text-gray-900 dark:text-white">
+                                {item.time}
+                            </td>
+                            <td className="py-4 text-center font-medium text-gray-900 dark:text-white">
+                                {item.brand_id.name}
+                            </td>
+                            <td className="py-4 text-center font-medium text-gray-900 dark:text-white">
+                                {item.address.name}
+                            </td>
+
+                            <td className="py-4">
+                                <Select
+                                    options={item.specification.map(specification => ({
+                                        value: specification.specification_id._id,
+                                        label: (
+                                            <div>
+                                                <div className=''>
+                                                    <div className='font-medium text-gray-900'>
+                                                        {specification.specification_id.port_id.type} - {specification.specification_id.port_id.name}
+                                                    </div>
+                                                </div>
+                                                <div className='font-medium text-gray-900'>
+                                                    Công suất: {specification.specification_id.kw} kw
+                                                </div>
+                                                <div className='font-medium text-gray-900'>
+                                                    Giá: {specification.specification_id.price.toLocaleString("vi-VN", {
+                                                        style: "currency",
+                                                        currency: "VND"
+                                                    })}
+                                                </div>
+                                                <div className='font-medium text-gray-900'>
+                                                    Cổng sạc: {specification.specification_id.slot}
+                                                </div>
+                                            </div>
+                                        ),
+                                        image: specification.specification_id.port_id.image,
+                                    }))}
+                                    isSearchable={false}
+                                    value={null}
+                                    getOptionLabel={(e) => (
+                                        <div className="flex items-center font-medium text-gray-900">
+                                            <img src={e.image} alt={e.label} className="w-12 h-12 mr-2" />
+                                            {e.label}
+                                        </div>
+                                    )}
+                                    styles={{
+                                        menu: (base) => ({ ...base, zIndex: 9999, width: 200 }),
+                                        menuList: (base) => ({
+                                            ...base,
+                                            overflow: "hidden",
+                                        }),
+                                        option: (base, state) => ({
+                                            ...base,
+                                            backgroundColor: state.isFocused ? "transparent" : base.backgroundColor,
+                                        }),
+                                    }}
+                                    placeholder={item.specification.length + ' trụ sạc'}
+                                />
+                            </td>
+
+                            <td className="pl-6 py-4 text-center">
+                                <Select
+                                    options={item.service.map(service => ({
+                                        value: service.service_id._id,
+                                        label: service.service_id.name,
+                                        image: service.service_id.image
+                                    }))}
+                                    isSearchable={false}
+                                    value={null}
+                                    getOptionLabel={(e) => (
+                                        <div className="flex items-center font-medium text-gray-900">
+                                            <img src={e.image} alt={e.label} className="w-6 h-6 mr-2" />
+                                            {e.label}
+                                        </div>
+                                    )}
+                                    styles={{
+                                        menu: (base) => ({ ...base, zIndex: 9999, width: 150 }),
+                                        menuList: (base) => ({
+                                            ...base,
+                                            overflow: "hidden",
+                                        }),
+                                        option: (base, state) => ({
+                                            ...base,
+                                            backgroundColor: state.isFocused ? "transparent" : base.backgroundColor,
+                                        }),
+                                    }}
+                                    placeholder={item.service.length + ' dịch vụ'}
+                                />
+                            </td>
+
+                            <td className="py-4 text-center font-medium text-gray-900 dark:text-white">{item.note ? item.note : 'Không có'}</td>
+
+                            {number === 2 || number === 3 ?
+                                <>
+                                    <td className="px-6 py-4 text-center">
+                                        <label className="relative inline-flex items-center cursor-pointer">
+                                            <input
+                                                type="checkbox"
+                                                className="sr-only peer"
+                                                checked={paused}
+                                                onChange={() => setPaused(!paused)}
+                                            />
+                                            <div className="w-14 h-8 bg-gray-300 rounded-full peer peer-checked:bg-blue-600 relative transition-all duration-300">
+                                                <div className={`absolute left-1 top-1 w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300 
+                                                    ${paused ? "translate-x-6" : "translate-x-0"}`}>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </td>
+                                </>
+                                :
+                                null
+                            }
+
+                            <td className="px-6 py-4 text-right">
+                                <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Sửa</a>
+                            </td>
+
+                            {number === 1 ?
+                                <>
+                                    <td className="px-6 py-4 text-right">
+                                        <a className="font-medium text-green-500 dark:text-white text-2xl">✓</a>
+                                    </td>
+                                    <td className="px-6 py-4 text-right w-10">
+                                        <a className="font-medium text-red-500 dark:text-white text-2xl">✗</a>
+                                    </td>
+                                </>
+                                :
+                                null
+                            }
                         </tr>
-                    )}
-                </tbody>
-            </table>
-        </div>
+                    ))
+                )}
+            </tbody>
+        </table>
     );
 };
 

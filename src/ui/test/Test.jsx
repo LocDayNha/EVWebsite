@@ -1,18 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import AxiosInstance from '../../components/util/AxiosInstance';
 import Select from "react-select";
+import Loading from '../../components/item/Loading';
 
 const Test = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [sortConfig, setSortConfig] = useState(null);
 
     const [dataStation, setDataStation] = useState([]);
+    const [number, setNumber] = useState(null);
+    const [selectItem, setSelectItem] = useState(null);
+    const [isPaused, setIsPaused] = useState(false);
 
     const getDataStation = async (isActive) => {
         try {
+            setDataStation([]);
             const dataStation = await AxiosInstance().post('/station/getByActive', { isActive: isActive });
             if (dataStation.data && dataStation.data.length > 0) {
                 setDataStation(dataStation.data);
+                setNumber(isActive);
+                if (isActive === 2) {
+                    setIsPaused(true);
+                } else {
+                    setIsPaused(false);
+                }
             } else {
                 setDataStation([]);
                 console.log('Không tìm thấy dữ liệu từ /station/getByActive');
@@ -21,6 +32,11 @@ const Test = () => {
             console.error('Lỗi khi lấy dữ liệu station:', error);
         }
     };
+
+    const OpenClose = async (id) => {
+        setSelectItem(id);
+        setIsPaused(!isPaused);
+    }
 
     const filteredData = dataStation.filter(item =>
         item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -65,8 +81,8 @@ const Test = () => {
     }, [])
 
     return (
-        <div className='p-4 dark:bg-gray-900'>
-            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <div className='dark:bg-gray-900'>
+            <div className=" p-4 relative overflow-x-auto shadow-md sm:rounded-lg">
                 <div className="flex flex-row sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
 
                     <div className='flex flex-row'>
@@ -190,9 +206,33 @@ const Test = () => {
                                     Ghi chú
                                 </div>
                             </th>
+                            {number === 2 || number === 3 ?
+                                <>
+                                    <th scope="col" className="px-6 py-3">
+                                        <div className="flex items-center justify-center">
+                                            Hoạt động
+                                        </div>
+                                    </th>
+                                </>
+                                :
+                                null
+                            }
+
                             <th scope="col" className="px-6 py-3">
                                 <span className="sr-only">Sửa</span>
                             </th>
+                            {number === 1 ?
+                                <>
+                                    <th scope="col" className="px-6 py-3">
+                                        <span className="sr-only">Chấp nhận</span>
+                                    </th>
+                                    <th scope="col" className="px-6 py-3">
+                                        <span className="sr-only">Từ chối</span>
+                                    </th>
+                                </>
+                                :
+                                null
+                            }
                         </tr>
                     </thead>
 
@@ -205,11 +245,12 @@ const Test = () => {
                             </tr>
                         ) : (
                             sortedData.map((item, index) => (
+
                                 <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
                                     <td className="pl-4 py-4">
                                         <img src={item.image} className="w-80 h-50 object-cover" />
                                     </td>
-                                    <td className="w-32 text-center pl-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <td className="text-center pl-6 py-4 w-50 font-medium text-gray-900 dark:text-white">
                                         {item.name}
                                     </td>
                                     <td className="pl-6 py-4 text-center w-60 font-medium text-gray-900 dark:text-white">
@@ -224,18 +265,16 @@ const Test = () => {
                                     <td className="py-4 text-center font-medium text-gray-900 dark:text-white">
                                         {item.address.name}
                                     </td>
+
                                     <td className="py-4">
                                         <Select
                                             options={item.specification.map(specification => ({
                                                 value: specification.specification_id._id,
                                                 label: (
                                                     <div>
-                                                        <div className='flex flex-row'>
+                                                        <div className=''>
                                                             <div className='font-medium text-gray-900'>
-                                                                {specification.specification_id.port_id.type} -
-                                                            </div>
-                                                            <div className='font-medium text-gray-900'>
-                                                                {specification.specification_id.port_id.name}
+                                                                {specification.specification_id.port_id.type} - {specification.specification_id.port_id.name}
                                                             </div>
                                                         </div>
                                                         <div className='font-medium text-gray-900'>
@@ -257,7 +296,7 @@ const Test = () => {
                                             isSearchable={false}
                                             value={null}
                                             getOptionLabel={(e) => (
-                                                <div className="flex items-center w-70">
+                                                <div className="flex items-center font-medium text-gray-900">
                                                     <img src={e.image} alt={e.label} className="w-12 h-12 mr-2" />
                                                     {e.label}
                                                 </div>
@@ -276,6 +315,7 @@ const Test = () => {
                                             placeholder={item.specification.length + ' trụ sạc'}
                                         />
                                     </td>
+
                                     <td className="pl-6 py-4 text-center">
                                         <Select
                                             options={item.service.map(service => ({
@@ -286,18 +326,66 @@ const Test = () => {
                                             isSearchable={false}
                                             value={null}
                                             getOptionLabel={(e) => (
-                                                <div className="flex items-center w-30 font-medium text-gray-900">
+                                                <div className="flex items-center font-medium text-gray-900">
                                                     <img src={e.image} alt={e.label} className="w-6 h-6 mr-2" />
                                                     {e.label}
                                                 </div>
                                             )}
+                                            styles={{
+                                                menu: (base) => ({ ...base, zIndex: 9999, width: 150 }),
+                                                menuList: (base) => ({
+                                                    ...base,
+                                                    overflow: "hidden",
+                                                }),
+                                                option: (base, state) => ({
+                                                    ...base,
+                                                    backgroundColor: state.isFocused ? "transparent" : base.backgroundColor,
+                                                }),
+                                            }}
                                             placeholder={item.service.length + ' dịch vụ'}
                                         />
                                     </td>
+
                                     <td className="py-4 text-center font-medium text-gray-900 dark:text-white">{item.note ? item.note : 'Không có'}</td>
+
+                                    {number === 2 || number === 3 ?
+                                        <>
+                                            <td className="px-6 py-4 text-center">
+                                                <label className="relative inline-flex items-center cursor-pointer">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="sr-only peer"
+                                                        checked={isPaused}
+                                                        // onChange={() => isPaused(false)}
+                                                    />
+                                                    <div className="w-14 h-8 bg-gray-300 rounded-full peer peer-checked:bg-blue-600 relative transition-all duration-300">
+                                                        <div className={`absolute left-1 top-1 w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300 
+                                                                ${isPaused ? "translate-x-6" : "translate-x-0"}`}>
+                                                        </div>
+                                                    </div>
+                                                </label>
+                                            </td>
+                                        </>
+                                        :
+                                        null
+                                    }
+
                                     <td className="px-6 py-4 text-right">
-                                        <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                        <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Sửa</a>
                                     </td>
+
+                                    {number === 1 ?
+                                        <>
+                                            <td className="px-6 py-4 text-right">
+                                                <a className="font-medium text-green-500 dark:text-white text-2xl">✓</a>
+                                            </td>
+                                            <td className="px-6 py-4 text-right w-10">
+                                                <a className="font-medium text-red-500 dark:text-white text-2xl">✗</a>
+                                            </td>
+                                        </>
+                                        :
+                                        null
+                                    }
                                 </tr>
                             ))
                         )}
