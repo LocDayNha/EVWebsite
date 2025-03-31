@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react'
-import AxiosInstance from '../../../../components/util/AxiosInstance';
-import Select from "react-select";
-import Loading from '../../../../components/item/Loading';
-import BrandCar from '../../../../components/list/brandcar';
+import React from 'react'
+import ListType from '../../../../components/list/listType';
 
 const ListBrandCar = () => {
-
-    
     return (
         <div className='drak:p-4 dark:bg-gray-900 '>
-            <BrandCar />
+            <ListType
+                title={'Hãng xe'}
+                content1={'Tên hãng xe'}
+                urlGetData={'/brandcar/getAll'}
+                urlUpdateStatus={'/brandcar/activeUpdate'}
+                titleAlert={'Thông báo'}
+                messageAlert={'Bạn có muốn thay đổi trạng thái không?'}
+            />
         </div >
     );
 }
