@@ -12,6 +12,8 @@ import ListStation from '../../ui/main/admin/list/ListStation';
 
 import ListAddress from '../../ui/main/admin/list/ListAddress';
 import ListBrandCar from '../../ui/main/admin/list/ListBrandCar';
+import ListBrandStation from '../../ui/main/admin/list/ListBrandStation';
+
 
 import ListPart1 from '../../ui/main/admin/ListPart1';
 
@@ -32,6 +34,8 @@ const Navigator = () => {
 
             <Route path='/listaddress' element={<ListAddress />} />
             <Route path='/listbrandcar' element={<ListBrandCar />} />
+            <Route path='/listbrandstation' element={<ListBrandStation />} />
+
 
             <Route path='/test' element={<Test />} />
         </Routes>
