@@ -7,12 +7,9 @@ import Station from '../../../../components/list/station';
 const ListStation = () => {
 
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortConfig, setSortConfig] = useState(null);
   const [dataStation, setDataStation] = useState([]);
-  const [number, setNumber] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [isPaused, setIsPaused] = useState(null);
-  const [searchKey, setSearchKey] = useState(null);
+  const [number, setNumber] = useState(2);
 
   const getDataStation = async (isActive) => {
     try {
@@ -21,12 +18,6 @@ const ListStation = () => {
       const dataStation = await AxiosInstance().post('/station/getByActive', { isActive: isActive });
       if (dataStation.data && dataStation.data.length > 0) {
         setDataStation(dataStation.data);
-        setNumber(isActive);
-        if (isActive === 2) {
-          setIsPaused(true);
-        } else {
-          setIsPaused(false);
-        }
         setIsLoading(false);
       } else {
         setDataStation([]);
@@ -38,7 +29,6 @@ const ListStation = () => {
       console.error('Lỗi khi lấy dữ liệu station:', error);
     }
   };
-
   const filteredData = dataStation.filter(item =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     item.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -47,50 +37,12 @@ const ListStation = () => {
     item.address.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const sortedData = [...filteredData];
-  if (sortConfig !== null) {
-    sortedData.sort((a, b) => {
-      const valueA = sortConfig.key.includes(".")
-        ? sortConfig.key.split(".").reduce((o, k) => (o ? o[k] : ""), a)
-        : a[sortConfig.key];
-
-      const valueB = sortConfig.key.includes(".")
-        ? sortConfig.key.split(".").reduce((o, k) => (o ? o[k] : ""), b)
-        : b[sortConfig.key];
-
-      if (valueA < valueB) {
-        return sortConfig.direction === 'ascending' ? -1 : 1;
-      }
-      if (valueA > valueB) {
-        return sortConfig.direction === 'ascending' ? 1 : -1;
-      }
-      return 0;
-    });
-
-  }
-
-  const requestSort = key => {
-    let direction = 'ascending';
-    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
-      direction = 'descending';
-    }
-    setSortConfig({ key, direction });
-  };
-
   useEffect(() => {
-    getDataStation(2);
-  }, [])
-
-  useEffect(() => {
-    if(searchKey){
-      requestSort(searchKey);
-    }else{
-      console.log('Không có key');
-    }
-  }, [searchKey])
+    getDataStation(number);
+  }, [number])
 
   return (
-    <div className='drak:p-4 dark:bg-gray-900'>
+    <div className='drak:p-4 dark:bg-gray-900 '>
       {isLoading ?
         <Loading />
         :
@@ -98,28 +50,28 @@ const ListStation = () => {
           <div className="flex flex-row sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
             {/* Điều hướng */}
             <div className='flex flex-row'>
-              <div className="" onClick={() => getDataStation(2)}>
+              <div className="" onClick={() => setNumber(2)}>
                 <div
                   className="h-9.5 w-40 flex items-center justify-center text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
                   Đang hoạt động
                 </div>
               </div>
-              <div className="ml-3" onClick={() => getDataStation(3)}>
+              <div className="ml-3" onClick={() => setNumber(4)}>
                 <div
                   className="h-9.5 w-40 flex items-center justify-center text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
                   Dừng hoạt động
                 </div>
               </div>
-              <div className="ml-3" onClick={() => getDataStation(1)}>
+              <div className="ml-3" onClick={() => setNumber(1)}>
                 <div
                   className="h-9.5 w-40 flex items-center justify-center text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
                   Chờ phê duyệt
                 </div>
               </div>
-              <div className="ml-3" onClick={() => getDataStation(4)}>
+              <div className="ml-3" onClick={() => setNumber(3)}>
                 <div
                   className="h-9.5 w-40 flex items-center justify-center text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
@@ -145,7 +97,12 @@ const ListStation = () => {
             </div>
           </div>
 
-          <Station data={sortedData} number={number} isPaused={isPaused} search={setSearchKey}/>
+          <Station
+            filteredData={filteredData}
+            number={number}
+            setNumber={setNumber}
+            getData={getDataStation}
+          />
 
         </div>
       }

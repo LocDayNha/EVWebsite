@@ -1,18 +1,18 @@
 import React from 'react'
 import ListType from '../../../../components/list/listType';
 
-const ListAddress = () => {
+const ListService = () => {
     return (
         <div className='drak:p-4 dark:bg-gray-900 '>
             <ListType
-                title={'Vị trí đặt trạm sạc'}
-                content1={'Tên địa chỉ'}
-                urlGetData={'/location/getAll'}
-                urlUpdateStatus={'/location/activeUpdate'}
+                title={'Dịch vụ'}
+                content1={'Tên dịch vụ'}
+                urlGetData={'/services/getAll'}
+                urlUpdateStatus={'/services/activeUpdate'}
                 titleAlert={'Thông báo'}
                 messageAlert={'Bạn có muốn thay đổi trạng thái không?'}
             />
         </div >
-    );
+    )
 }
-export default ListAddress
+export default ListService
