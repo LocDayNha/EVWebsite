@@ -8,6 +8,8 @@ import Radio from '../dropdown/Radio';
 
 const Port = (props) => {
 
+    const { dataName, dataElectric, dataImage, LogData } = props;
+
     const dataTypePort =
         [
             { "_id": "wq21e1dq11ed21wd1", "name": "AC" },
@@ -20,10 +22,11 @@ const Port = (props) => {
     const [name, setName] = useState(null);
     const [image, setImage] = useState(null);
     const [type, setType] = useState(null);
+    const [isValidation, setIsValidation] = useState(null);
 
     const [checkValidationName, setCheckValidationName] = useState(false);
-    const [checkValidationImage, setCheckValidationImage] = useState(false);
     const [checkValidationType, setCheckValidationType] = useState(false);
+    const [checkValidationImage, setCheckValidationImage] = useState(false);
 
     const showToast = (type, message) => {
 
@@ -46,64 +49,72 @@ const Port = (props) => {
         setAlert(null);
     };
 
+    useEffect(() => {
+        if (isValidation === true) {
+            LogData();
+
+            setTimeout(() => {
+                setName(null);
+                setType(null);
+                setImage(null);
+                setIsValidation(null);
+            }, 100);
+        }
+    }, [isValidation]);
+
     const validation = async () => {
 
-        let isValidation = true;
+        let isValid = true;
 
         if (!name || name.trim() <= 0) {
             setCheckValidationName(true);
-            isValidation = false;
             showToast('error', 'Không được bỏ trống tên');
-            return;
+            isValid = false;
         } else {
             setCheckValidationName(false);
         }
 
         if (!type) {
             setCheckValidationType(true);
-            isValidation = false;
             showToast('error', 'Không được bỏ trống dòng điện');
-            return;
+            isValid = false;
         } else {
             setCheckValidationType(false);
         }
 
         if (!image) {
             setCheckValidationImage(true);
-            isValidation = false;
             showToast('error', 'Không được bỏ trống hình ảnh');
-            return;
+            isValid = false;
         } else {
             setCheckValidationImage(false);
-            setAlert(null);
-            return isValidation;
         }
+
+        if (!isValid) {
+            setIsValidation(false);
+            return;
+        }
+
+        setIsValidation(true);
+        setAlert(null);
+
     }
 
-    const LogData = async () => {
-        try {
-            const isValidation = await validation();
-
-            if (isValidation) {
-                console.log('name:', name);
-                console.log('type:', type.name);
-                console.log('image:', image);
-                window.location.reload();
-            }
-        } catch (error) {
-            console.log('ERROR:', error);
-        }
-    }
+    useEffect(() => {
+        dataName(name);
+        dataElectric(type?.name);
+        dataImage(image);
+    }, [name, type, image]);
 
     return (
         <div className='flex justify-center items-center min-h-screen p-4 dark:bg-gray-900'>
             <div className='flex bg-white rounded-lg overflow-hidden w-full max-w-3xl relative p-8 flex-col items-center dark:bg-gray-700 dark:text-white'>
                 <h1 className='text-2xl font-semibold mb-6'>{props.title}</h1>
 
-                <TextInputText title='Tên' placeholder={props.placeholder} onChange={e => setName(e.target.value)} checkValidation={checkValidationName} />
-                <Radio data={dataTypePort} title='Dòng điện' selectedData={setType} checkValidation={checkValidationType} />
-                <TextInputFile title='Hình ảnh' onChange={() => setImage('CO NHAN CHON HINH ANH')} checkValidation={checkValidationImage} />
-                <Button title='Xác nhận' onClick={LogData} />
+                <TextInputText title='Tên' value={name || ''} placeholder={props.placeholder} onChange={e => setName(e.target.value)} checkValidation={checkValidationName} />
+                <Radio data={dataTypePort} title='Dòng điện' value={type || null} selectedData={setType} checkValidation={checkValidationType} />
+                <TextInputFile title='Hình ảnh' reset={image === null} onChange={() => setImage('CO NHAN CHON HINH ANH')} checkValidation={checkValidationImage} />
+                <Button title='Xác nhận' onClick={validation} />
                 {alert ? <NotificationAlert type={alert.type} message={alert.message} onClose={hideAlert} /> : null}
             </div>
         </div>

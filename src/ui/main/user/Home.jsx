@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import Loading from '../../../components/item/Loading';
 
-const Home = () =>{
+const Home = () => {
     return (
-        <Loading/>
+
+        <Loading />
+
     )
 }
 

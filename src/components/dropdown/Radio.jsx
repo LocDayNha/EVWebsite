@@ -2,14 +2,18 @@ import React, { useState, useEffect } from "react";
 
 const Radio = (props) => {
 
-  const { data, selectedData, checkValidation } = props;
+  const { data, selectedData, checkValidation, value } = props;
 
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedRadio, setSelectedRadio] = useState(null);
+  const [selectedRadio, setSelectedRadio] = useState(value || null);
 
   useEffect(() => {
     selectedData?.(selectedRadio);
   }, [selectedRadio, selectedData]);
+
+  useEffect(() => {
+    setSelectedRadio(value);
+  }, [value]);
 
   return (
     <div className="w-full mt-1">
@@ -17,7 +21,7 @@ const Radio = (props) => {
 
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-full dark:text-white border ${checkValidation === true ? "border-red-500" : "border-gray-300"} font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-between items-center dark:bg-gray-600 dark:hover:bg-gray-700`}
+        className={`w-full bg-white mt-1 dark:text-white border ${checkValidation === true ? "border-red-500" : "border-gray-300"} font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-between items-center dark:bg-gray-600 dark:hover:bg-gray-700`}
         type="button"
       >
         <div className="flex">
@@ -27,7 +31,7 @@ const Radio = (props) => {
             null
           }
           <span>{selectedRadio?.name || 'Chưa chọn'}</span>
-        </div>
+        </div>  
         <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
           <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
         </svg>

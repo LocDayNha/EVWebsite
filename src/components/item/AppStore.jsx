@@ -5,7 +5,7 @@ const AppStore = () => {
     return (
         <div className='w-auto mt-3.5'>
             <a
-                href=""
+                href="*"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center bg-black text-white px-4 py-2 rounded-xl shadow-md border border-gray-700 hover:opacity-80 transition"

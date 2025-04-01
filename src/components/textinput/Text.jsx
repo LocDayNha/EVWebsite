@@ -2,7 +2,7 @@ import React from 'react'
 
 const TextInputText = (props) => {
 
-    const { onChange, checkValidation } = props;
+    const { onChange, checkValidation, value } = props;
 
     return (
         <div className="w-full mt-1">
@@ -15,6 +15,7 @@ const TextInputText = (props) => {
                     <input
                         // id="email"
                         // name="email"
+                        value={value || ""}
                         onChange={onChange}
                         type="text"
                         placeholder={props.placeholder}

@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import FormBasicVerOne from '../../../../components/form/VerOne';
 import AxiosInstance from '../../../../components/util/AxiosInstance';
 
-const FormAddress = () => {
+const FormService = () => {
 
     const [dataName, setDataName] = useState(null);
     const [dataImage, setDataImage] = useState(null);
@@ -17,8 +17,8 @@ const FormAddress = () => {
     return (
         <div className='w-full'>
             <FormBasicVerOne
-                title='Nơi đặt trạm sạc'
-                placeholder='Nơi đặt trạm sạc'
+                title='Dịch vụ'
+                placeholder='Tên dịch vụ'
                 dataName={setDataName}
                 dataImage={setDataImage}
                 LogData={LogData} />
@@ -26,4 +26,4 @@ const FormAddress = () => {
     );
 };
 
-export default FormAddress;
+export default FormService;

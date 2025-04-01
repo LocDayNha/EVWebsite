@@ -1,8 +1,15 @@
-import React from 'react'
+import React, { useRef } from 'react';
 
 const TextInputFile = (props) => {
 
-    const { onChange, checkValidation } = props;
+    const { onChange, checkValidation, reset } = props;
+    const fileInputRef = useRef(null);
+
+    React.useEffect(() => {
+        if (reset && fileInputRef.current) {
+            fileInputRef.current.value = "";
+        }
+    }, [reset]);
 
     return (
         <div className="w-full mt-1">
@@ -13,6 +20,7 @@ const TextInputFile = (props) => {
                         `}
                 >
                     <input
+                        ref={fileInputRef}
                         id="file_input"
                         onChange={onChange}
                         type="file"
