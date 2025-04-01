@@ -9,7 +9,6 @@ import Home from '../../ui/main/user/Home';
 import Test from '../../ui/test/Test';
 
 import ListStation from '../../ui/main/admin/list/ListStation';
-
 import ListAddress from '../../ui/main/admin/list/ListAddress';
 import ListBrandCar from '../../ui/main/admin/list/ListBrandCar';
 import ListBrandStation from '../../ui/main/admin/list/ListBrandStation';
@@ -17,7 +16,7 @@ import ListPort from '../../ui/main/admin/list/ListPort';
 import ListService from '../../ui/main/admin/list/ListService';
 import ListVehicle from '../../ui/main/admin/list/ListVehicle';
 
-import ListPart1 from '../../ui/main/admin/ListPart1';
+import FormAddress from '../../ui/main/admin/form/FormAddress';
 
 const Navigator = () => {
     return (
@@ -31,15 +30,14 @@ const Navigator = () => {
             <Route path='/newPass' element={<NewPass />} />
 
             <Route path='/liststation' element={<ListStation />} />
-
-            <Route path='/listpart1' element={<ListPart1 />} />
-
             <Route path='/listaddress' element={<ListAddress />} />
             <Route path='/listbrandcar' element={<ListBrandCar />} />
             <Route path='/listbrandstation' element={<ListBrandStation />} />
             <Route path='/listport' element={<ListPort />} />
             <Route path='/listservice' element={<ListService />} />
             <Route path='/listvehicle' element={<ListVehicle />} />
+
+            <Route path='/formaddress' element={<FormAddress />} />
 
             <Route path='/test' element={<Test />} />
         </Routes>
