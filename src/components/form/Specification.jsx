@@ -61,9 +61,13 @@ const Specification = (props) => {
             </div>
 
             {openViewSpecification ?
-                <div className="fixed inset-0 flex items-center justify-center bg-gray-200/10 backdrop-blur-[2px] p-5">
+                <div className="fixed inset-0 flex items-center justify-center bg-gray-200/10 backdrop-blur-[2px] p-5 ">
 
-                    <div className='w-160 p-3 rounded-2xl bg-white'>
+                    <div className='w-160 p-3 rounded-2xl bg-white dark:bg-gray-700'>
+                        <div className='w-full flex items-center justify-center'>
+                            <h1 className='text-2xl font-semibold mb-6'>Trụ sạc</h1>
+                        </div>
+
                         <div className='w-full flex justify-between'>
                             <div className='w-3/10'>
                                 <TextInputText title='Công suất (kw)' placeholder='Nhập số kw' />
@@ -76,7 +80,7 @@ const Specification = (props) => {
                             </div>
                         </div>
 
-                        <div className='w-full flex justify-between'>
+                        <div className='w-full flex justify-between mt-2'>
                             <div className='w-2/5'>
                                 <Radio data={dataPort} title='Cổng sạc' />
                             </div>
