@@ -38,13 +38,13 @@ const ConfirmAlert = ({  title, message, onCancel, onComfirm }) => {
                 <p className="text-gray-600 text-center mt-2">{message}</p>
                 <div className="flex flex-row justify-between items-center mt-4 w-full">
                     <button
-                        className={`px-4 py-2 text-white rounded-lg bg-green-600 hover:bg-green-700`}
+                        className={`px-4 py-2 text-white rounded-lg bg-green-600 hover:bg-green-700 w-30 `}
                         onClick={onComfirm}
                     >
                         Xác Nhận
                     </button>
                     <button
-                        className={`px-4 py-2 text-white rounded-lg bg-red-600 hover:bg-red-700`}
+                        className={`px-4 py-2 text-white rounded-lg bg-red-600 hover:bg-red-700 w-30`}
                         onClick={onCancel}
                     >
                         Hủy

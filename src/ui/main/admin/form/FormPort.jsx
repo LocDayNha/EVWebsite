@@ -19,6 +19,7 @@ const FormPort = () => {
     return (
         <div className='w-full'>
             <Port
+                urlAddData='/port/addNew'
                 title='Cổng sạc'
                 placeholder='Tên cổng sạc'
                 dataName={setDataName}

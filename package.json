@@ -12,7 +12,9 @@
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.1.2",
     "@tailwindcss/vite": "^4.0.13",
+    "aws-sdk": "^2.1692.0",
     "axios": "^1.8.4",
+    "firebase": "^11.6.0",
     "flowbite": "^3.1.2",
     "lucide-react": "^0.483.0",
     "react": "^19.0.0",

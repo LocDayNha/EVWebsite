@@ -39,7 +39,7 @@ const NotificationApiAlert = ({ title, message, type, onCancel, onClose }) => {
                 <p className=" px-4 py-2 text-gray-600 text-center mt-2">{message}</p>
 
                 <button
-                    className={`px-4 py-2 border-1 border-gray-300 rounded-lg `}
+                    className={`px-4 py-2 border-1 border-gray-300 rounded-lg w-30 `}
                     onClick={onClose}
                 >
                     Xác Nhận

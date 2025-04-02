@@ -17,6 +17,7 @@ const FormBrandCar = () => {
     return (
         <div className='w-full'>
             <FormBasicVerOne
+                urlAddData='/brandCar/addNew'
                 title='Hãng xe'
                 placeholder='Tên hãng xe'
                 dataName={setDataName}
