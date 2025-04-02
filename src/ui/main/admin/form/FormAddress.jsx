@@ -17,6 +17,7 @@ const FormAddress = () => {
     return (
         <div className='w-full'>
             <FormBasicVerOne
+                urlAddData='/location/addNew'
                 title='Nơi đặt trạm sạc'
                 placeholder='Nơi đặt trạm sạc'
                 dataName={setDataName}

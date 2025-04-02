@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
+import AxiosInstance from '../util/AxiosInstance';
 
 const CheckBox = (props) => {
 
-  const { data, selectedData } = props;
+  const { data, selectedData ,title} = props;
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCheckBox, setSelectedCheckBox] = useState([]);
@@ -21,9 +22,10 @@ const CheckBox = (props) => {
     selectedData?.(selectedCheckBox);
   }, [selectedCheckBox, selectedData]);
 
+
   return (
     <div className="w-full mt-1">
-      <span className="text-gray-700 after:ml-0.5 after:text-red-500 after:content-['*']">Check Box</span>
+      <span className="text-gray-700 after:ml-0.5 after:text-red-500 after:content-['*'] dark:text-white">{title}</span>
 
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -41,11 +43,11 @@ const CheckBox = (props) => {
       </button>
 
       {isOpen && (
-        <div className="absolute z-10 mt-2 w-full bg-white divide-y divide-gray-100 rounded-lg shadow-sm">
-          <ul className="p-3 space-y-1 text-sm text-gray-700">
+        <div className=" z-10 mt-2 w-full bg-white divide-y divide-gray-100 rounded-lg shadow-sm dark:bg-gray-600">
+          <ul className="p-3 space-y-1 text-sm text-gray-700 dark:text-white max-h-60 overflow-y-auto">
             {data.map((option) => (
               <li key={option._id}>
-                <div className="flex items-center p-2 rounded-sm hover:bg-gray-100 cursor-pointer">
+                <div className="flex items-center p-2 rounded-sm hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-400">
                   <input
                     id={option._id}
                     type="checkbox"

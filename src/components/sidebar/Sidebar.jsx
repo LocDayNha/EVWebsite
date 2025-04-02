@@ -1,31 +1,36 @@
 import React, { useState, useEffect } from 'react'
 
-const Sidebar = () => {
-
+const Sidebar = ({ setNumberL }) => {
+    const [numberList, setNumberList] = useState(1);
     const listData =
         [
-            { "_id": "1", "name": "Nơi đặt trạm sạc" },
-            { "_id": "3", "name": "Hãng xe" },
-            { "_id": "4", "name": "Hãng trạm sạc" },
-            { "_id": "5", "name": "Đầu sạc" },
-            { "_id": "6", "name": "Dịch vụ" },
-            { "_id": "7", "name": "Trạm sạc" },
-            { "_id": "8", "name": "Loại phương tiện" }
+            { "_id": "1", "name": "Trạm sạc", 'urlHref': '../listStation' },
+            { "_id": "2", "name": "Hãng xe", 'urlHref': '../listbrandcar' },
+            { "_id": "3", "name": "Hãng trạm sạc", 'urlHref': '../listbrandstation' },
+            { "_id": "4", "name": "Đầu sạc", 'urlHref': '../listport' },
+            { "_id": "5", "name": "Dịch vụ", 'urlHref': '../listservice' },
+            { "_id": "6", "name": "Nơi đặt trạm sạc", 'urlHref': '../listaddress' },
+            { "_id": "7", "name": "Loại phương tiện", 'urlHref': '../listvehicle' }
         ]
 
     const formData =
         [
-            { "_id": "1", "name": "Nơi đặt trạm sạc" },
-            { "_id": "3", "name": "Hãng xe" },
-            { "_id": "4", "name": "Hãng trạm sạc" },
-            { "_id": "5", "name": "Đầu sạc" },
-            { "_id": "6", "name": "Dịch vụ" },
-            { "_id": "7", "name": "Trạm sạc" },
-            { "_id": "8", "name": "Loại phương tiện" }
+            { "_id": "8", "name": "Trạm sạc" },
+            { "_id": "9", "name": "Hãng xe" },
+            { "_id": "10", "name": "Hãng trạm sạc" },
+            { "_id": "11", "name": "Đầu sạc" },
+            { "_id": "12", "name": "Dịch vụ" },
+            { "_id": "13", "name": "Trạm sạc" },
+            { "_id": "14", "name": "Loại phương tiện" }
         ]
 
     const [showList, setShowList] = useState(false);
     const [showForm, setShowForm] = useState(false);
+
+    useEffect(() => {
+        setNumberL(numberList);
+    }, [numberList])
+
 
     return (
         <div className='w-full'>
@@ -37,7 +42,7 @@ const Sidebar = () => {
                 </svg>
             </button>
 
-            <aside id="logo-sidebar" className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+            <aside id="logo-sidebar" className=" w-64 h-screen transition-transform sm:translate-x-0 bg-gray-800 text-white" aria-label="Sidebar">
                 <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
                     <a href="*" className="flex items-center ps-2.5 mb-5">
                         <img src={"https://i.pinimg.com/736x/8f/26/98/8f26983fbfc696d5fc13ddf6e45551a3.jpg"} className="h-12 w-12 mr-3 rounded-full" alt="Logo" />
@@ -72,7 +77,12 @@ const Sidebar = () => {
                                 <ul className="py-2 space-y-2">
                                     {listData.map((data) => (
                                         <li key={data._id}>
-                                            <a href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">{data.name}</a>
+                                            <div
+                                                onClick={() => setNumberList(data._id)}
+                                                className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                                {data.name}
+
+                                            </div>
                                         </li>
                                     ))}
                                 </ul>
@@ -98,7 +108,11 @@ const Sidebar = () => {
                                 <ul className="py-2 space-y-2">
                                     {formData.map((data) => (
                                         <li key={data._id}>
-                                            <a href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">{data.name}</a>
+                                            <div
+                                                onClick={() => setNumberList(data._id)}
+                                                className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                                {data.name}
+                                            </div>
                                         </li>
                                     ))}
                                 </ul>
@@ -119,7 +133,9 @@ const Sidebar = () => {
                         </li>
 
                         <li>
-                            <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <a
+                                href="#"
+                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                                     <path fillRule="evenodd" d="M6.912 3a3 3 0 0 0-2.868 2.118l-2.411 7.838a3 3 0 0 0-.133.882V18a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3v-4.162c0-.299-.045-.596-.133-.882l-2.412-7.838A3 3 0 0 0 17.088 3H6.912Zm13.823 9.75-2.213-7.191A1.5 1.5 0 0 0 17.088 4.5H6.912a1.5 1.5 0 0 0-1.434 1.059L3.265 12.75H6.11a3 3 0 0 1 2.684 1.658l.256.513a1.5 1.5 0 0 0 1.342.829h3.218a1.5 1.5 0 0 0 1.342-.83l.256-.512a3 3 0 0 1 2.684-1.658h2.844Z" clipRule="evenodd" />
                                 </svg>
