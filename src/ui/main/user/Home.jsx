@@ -34,7 +34,7 @@ const Home = () => {
                         <a href="#" className="text-gray-700 hover:text-green-600">Lộ trình</a>
                         <a href="#" className="text-gray-700 hover:text-green-600">Cài đặt</a>
                         <a href="#" className="text-gray-700 hover:text-green-600">Công nghệ</a>
-                        <a href="#" className="bg-green-600 text-white px-6 py-3 rounded-full hover:bg-green-700 transition duration-300">
+                        <a href="/login" className="bg-green-600 text-white px-6 py-3 rounded-full hover:bg-green-700 transition duration-300">
                             Đăng nhập
                         </a>
                     </div>
@@ -171,36 +171,71 @@ const Home = () => {
 
                 <div className="grid md:grid-cols-3 gap-8">
                     {/* Article 1 */}
-                    <div className="border p-6 rounded-lg hover:shadow-md text-center">
-                        <img src={image1} alt="Công nghệ sạc" className="rounded-lg mb-4 w-full object-cover" />
-                        <h3 className="text-lg font-semibold mb-2">Những công nghệ giúp tối ưu hiệu suất trạm sạc</h3>
-                        <p className="text-gray-600 mb-4">Khám phá các công nghệ mới nhất giúp tăng hiệu suất và tuổi thọ trạm sạc.</p>
-                        <a href="#" className="text-green-600 hover:text-green-700 font-semibold">Xem thêm →</a>
+                    <div className="relative group">
+                        <div className="overflow-hidden rounded-lg h-64">
+                            <img
+                                src={image1}
+                                alt="Công nghệ sạc"
+                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            />
+                        </div>
+                        <div className="absolute -bottom-15 left-1/2 transform -translate-x-1/2 bg-white p-6 rounded-lg shadow-md w-5/6">
+                            <h3 className="text-lg font-semibold mb-2 text-center">Những công nghệ giúp tối ưu hiệu suất trạm sạc</h3>
+                            <a href="#" className="text-green-600 hover:text-green-700 font-semibold flex justify-center items-center">
+                                Xem thêm →
+                            </a>
+                        </div>
                     </div>
 
                     {/* Article 2 */}
-                    <div className="border p-6 rounded-lg hover:shadow-md text-center">
-                        <img src={image2} alt="Tìm trạm sạc" className="rounded-lg mb-4 w-full object-cover" />
-                        <h3 className="text-lg font-semibold mb-2">Làm thế nào để tìm trạm sạc nhanh chóng và hiệu quả?</h3>
-                        <p className="text-gray-600 mb-4">Hướng dẫn sử dụng các tính năng tìm kiếm thông minh của ứng dụng.</p>
-                        <a href="#" className="text-green-600 hover:text-green-700 font-semibold">Xem thêm →</a>
+                    <div className="relative group">
+                        <div className="overflow-hidden rounded-lg h-64">
+                            <img
+                                src={image2}
+                                alt="Tìm trạm sạc"
+                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            />
+                        </div>
+                        <div className="absolute -bottom-15 left-1/2 transform -translate-x-1/2 bg-white p-6 rounded-lg shadow-md w-5/6">
+                            <h3 className="text-lg font-semibold mb-2 text-center">Làm thế nào để tìm trạm sạc nhanh chóng và hiệu quả?</h3>
+                            <a href="#" className="text-green-600 hover:text-green-700 font-semibold flex justify-center items-center">
+                                Xem thêm →
+                            </a>
+                        </div>
                     </div>
 
                     {/* Article 3 */}
-                    <div className="border p-6 rounded-lg hover:shadow-md text-center">
-                        <img src={image3} alt="Hạ tầng sạc điện" className="rounded-lg mb-4 w-full object-cover" />
-                        <h3 className="text-lg font-semibold mb-2">Sự phát triển của hạ tầng sạc điện tại Việt Nam</h3>
-                        <p className="text-gray-600 mb-4">Cập nhật tình hình phát triển hệ thống trạm sạc trên toàn quốc.</p>
-                        <a href="#" className="text-green-600 hover:text-green-700 font-semibold">Xem thêm →</a>
+                    <div className="relative group">
+                        <div className="overflow-hidden rounded-lg h-64">
+                            <img
+                                src={image3}
+                                alt="Hạ tầng sạc điện"
+                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            />
+                        </div>
+                        <div className="absolute -bottom-15 left-1/2 transform -translate-x-1/2 bg-white p-6 rounded-lg shadow-md w-5/6">
+                            <h3 className="text-lg font-semibold mb-2 text-center">Sự phát triển của hạ tầng sạc điện tại Việt Nam</h3>
+                            <a href="#" className="text-green-600 hover:text-green-700 font-semibold flex justify-center items-center">
+                                Xem thêm →
+                            </a>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <section className="py-16 px-4 max-w-6xl mx-auto bg-gray-50 text-center">
-                <h2 className="text-3xl font-bold text-gray-900 mb-6">
-                    Trải nghiệm giải pháp tìm kiếm trạm sạc thông minh
-                </h2>
-                <button className="bg-green-600 text-white text-lg font-semibold px-6 py-3 rounded-lg hover:bg-green-700 transition">
+            <section className="py-20 px-4 max-w-6xl mx-auto bg-gray-50 text-center">
+                {/* Nhóm tiêu đề với kích thước lớn */}
+                <div className="mb-10 space-y-3">
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                        Trải nghiệm giải pháp tìm kiếm
+                    </h1>
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                        trạm sạc thông minh
+                    </h1>
+                </div>
+
+                {/* Nút với kích thước chữ lớn */}
+                <button className="bg-green-600 hover:bg-green-700 text-white text-xl md:text-2xl font-semibold px-10 py-4 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
                     Dùng thử ngay →
                 </button>
             </section>
