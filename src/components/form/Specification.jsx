@@ -65,13 +65,13 @@ const Specification = (props) => {
 
                     <div className='w-160 p-3 rounded-2xl bg-white'>
                         <div className='w-full flex justify-between'>
-                            <div className='w-1/4'>
+                            <div className='w-3/10'>
                                 <TextInputText title='Công suất (kw)' placeholder='Nhập số kw' />
                             </div>
-                            <div className='w-1/4'>
+                            <div className='w-3/10'>
                                 <TextInputText title='Số lượng cổng sạc' placeholder='Nhập số cổng' />
                             </div>
-                            <div className='w-1/4'>
+                            <div className='w-3/10'>
                                 <TextInputText title='Giá tiền (vnđ/kwh)' placeholder='Nhập giá tiền' />
                             </div>
                         </div>

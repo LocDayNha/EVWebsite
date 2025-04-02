@@ -17,13 +17,6 @@ const Station = (props) => {
     const [dataService, setDataService] = useState([]);
     const [dataBrandStation, setDataBrandStation] = useState([]);
 
-
-    const dataTypePort =
-        [
-            { "_id": "wq21e1dq11ed21wd1", "name": "Cây xăng" },
-            { "_id": "12e1r1feaf11fasfd", "name": "Cây Mice" }
-        ]
-
     const getDataBrandCar = async () => {
         try {
             const response = await AxiosInstance().get('/brandcar/get');
@@ -36,7 +29,6 @@ const Station = (props) => {
             console.error("Lỗi khi lấy dữ liệu:", error);
         }
     };
-
     const getDataBrandStation = async () => {
         try {
             const response = await AxiosInstance().get('/brand/get');
