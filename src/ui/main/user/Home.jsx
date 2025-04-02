@@ -66,19 +66,30 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-            <hr></hr>
+            <hr />
 
             {/* Hằng Sạc Section */}
             <section className="py-16 px-4 max-w-6xl mx-auto bg-gray-50">
                 <div className="text-center mb-12">
-                    <h2 className="text-3xl font-bold text-green-600">Hằng Sạc</h2>
+                    <h2 className="text-3xl font-bold text-green-600">Hãng Sạc</h2>
                     <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
                         Chúng tôi cung cấp nhiều thông tin về các hãng sạc xe điện tại Việt Nam
                     </p>
                 </div>
 
+                <div className="flex justify-between gap-6 max-w-xl mx-auto mb-[29px]">
+                    {/* 7 nút tròn đơn giản */}
+                    <button className="w-12 h-12 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"></button>
+                    <button className="w-12 h-12 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"></button>
+                    <button className="w-12 h-12 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"></button>
+                    <button className="w-12 h-12 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"></button>
+                    <button className="w-12 h-12 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"></button>
+                    <button className="w-12 h-12 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"></button>
+                    <button className="w-12 h-12 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"></button>
+                </div>
+
                 <div className="text-center mb-12">
-                    <h3 className="text-xl font-semibold mb-2">Theo dõi thông tin, quản lý trạm sạc của bạn</h3>
+                    <h3 className="text-xl font-semibold mb-2 ">Theo dõi thông tin, quản lý trạm sạc của bạn</h3>
                     <p className="text-gray-600 mb-6">EV Website phù hợp với bạn?</p>
                 </div>
 
