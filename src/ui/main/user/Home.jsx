@@ -25,7 +25,7 @@ const Home = () => {
     return (
         <div className="w-full">
             {/* Navigation Bar */}
-            <nav className="bg-white shadow-md py-4 px-6">
+            <nav className="bg-white py-4 px-6">
                 <div className="container mx-auto flex justify-between items-center">
                     <h1 className="text-xl font-bold text-green-600">EV Website</h1>
                     <div className="flex items-center space-x-6">
@@ -40,6 +40,7 @@ const Home = () => {
                     </div>
                 </div>
             </nav>
+
             <hr className="border-t border-gray-300"></hr>
 
             {/* Hero Section with Image */}
@@ -66,7 +67,6 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-            <hr className="border-t border-gray-300" />
 
             {/* Hằng Sạc Section */}
             <section className="py-16 px-4 max-w-6xl mx-auto bg-white-50">
@@ -130,7 +130,7 @@ const Home = () => {
                         <img
                             src={managementImage}
                             alt="Hệ thống quản lý trạm sạc"
-                            className="w-full h-auto rounded-xl object-cover border border-gray-200"
+                            className="w-full h-auto rounded-xl object-cover"
                         />
                     </div>
 
@@ -235,12 +235,12 @@ const Home = () => {
             </section>
 
             {/* Simplified Footer Section */}
-            <footer className="bg-white py-8 border-t border-gray-300 my-4">
+            <footer className="bg-white py-8 my-4">
                 <div className="max-w-6xl mx-auto px-4">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-gray-700">
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-6 text-gray-700 border-t pt-6">
 
                         {/* Cột 1 - Product */}
-                        <div>
+                        <div className="">
                             <h3 className="font-semibold mb-3">Product</h3>
                             <ul className="space-y-2">
                                 <li><a href="#" className="hover:underline">Giá cả</a></li>
@@ -258,7 +258,6 @@ const Home = () => {
                                 <li><a href="#" className="hover:underline">Thương hiệu</a></li>
                                 <li><a href="#" className="hover:underline">Tin tức</a></li>
                                 <li><a href="#" className="hover:underline">Quan hệ</a></li>
-                                <li><a href="#" className="hover:underline">Liên kết</a></li>
                             </ul>
                         </div>
 
@@ -276,39 +275,36 @@ const Home = () => {
                         {/* Cột 4 - Cộng đồng + Hình ảnh App Store & Google Play */}
                         <div>
                             <h3 className="font-semibold mb-2">Cộng đồng</h3>
-                            <ul className="space-y-1 mb-4">
-                                <li>Đại lý</li>
-                                <li>--</li>
-                                <li>--</li>
+                            <ul className="space-y-2">
+                                <li><a href="#" className="hover:underline">Trung tâm hỗ trợ</a></li>
+                                <li><a href="#" className="hover:underline">Liên hệ với chúng tôi</a></li>
+                                <li><a href="#" className="hover:underline">Điều khoản</a></li>
+                                <li><a href="#" className="hover:underline">Thông tin an toàn</a></li>
                             </ul>
-                            <div className="flex space-x-4">
-                                <AppStore />
-                                <GooglePlay />
-                            </div>
+                        </div>
+
+                        <div>
+                            <AppStore />
+                            <GooglePlay />
                         </div>
                     </div>
                     {/* Dòng dưới cùng */}
                     <div className="mt-6 border-t pt-4 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
-                        <p>@loccdaynha</p>
-                        <div className="flex space-x-4">
-                            <a href="#" className="hover:underline">Hỗ trợ</a>
-                            <a href="#" className="hover:underline">Riêng tư</a>
-                            <a href="#" className="hover:underline">Điều khoản</a>
-                        </div>
-                        <div>
+                        <p>@loccdaynha13</p>
 
-                        </div>
                         <div className="flex items-center space-x-10">
-                            {/* Các icon mạng xã hội */}
+
                             <div className="flex space-x-4">
                                 <FaFacebookF className="text-gray-600 cursor-pointer" />
                                 <FaTwitter className="text-gray-600 cursor-pointer" />
                                 <FaInstagram className="text-gray-600 cursor-pointer" />
                             </div>
-                            {/* Tiếng Việt Option */}
+
                             <div className="flex items-center">
                                 <span>Tiếng Việt</span>
-                                <svg className="w-4 h-4 ml-1" /* Icon dropdown */ />
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
+                                    <path fillRule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
+                                </svg>
                             </div>
                         </div>
                     </div>
