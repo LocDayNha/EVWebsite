@@ -8,8 +8,8 @@ import managementImage from "../../../assets/image/main/home/management-system.p
 import image1 from "../../../assets/image/main/home/image1.png"
 import image2 from "../../../assets/image/main/home/image2.png"
 import image3 from "../../../assets/image/main/home/image3.png"
-import AppStore from "../../../assets/image/main/home/AppStore.png"
-import GooglePlay from "../../../assets/image/main/home/GooglePlay.png"
+import AppStore from "../../../../src/components/item/AppStore"
+import GooglePlay from "../../../../src/components/item/GooglePlay"
 
 
 const Home = () => {
@@ -40,7 +40,7 @@ const Home = () => {
                     </div>
                 </div>
             </nav>
-            <hr></hr>
+            <hr className="border-t border-gray-300"></hr>
 
             {/* Hero Section with Image */}
             <section className="py-16 px-4 max-w-6xl mx-auto bg-white">
@@ -61,15 +61,15 @@ const Home = () => {
                         <img
                             src={chargingStation}
                             alt="Trạm sạc xe điện"
-                            className="max-w-[350px] w-full h-auto rounded-lg shadow-md object-cover"
+                            className="max-w-[350px] w-full h-auto rounded-lg object-cover"
                         />
                     </div>
                 </div>
             </section>
-            <hr />
+            <hr className="border-t border-gray-300" />
 
             {/* Hằng Sạc Section */}
-            <section className="py-16 px-4 max-w-6xl mx-auto bg-gray-50">
+            <section className="py-16 px-4 max-w-6xl mx-auto bg-white-50">
                 <div className="text-center mb-12">
                     <h2 className="text-3xl font-bold text-green-600">Hãng Sạc</h2>
                     <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
@@ -95,37 +95,31 @@ const Home = () => {
 
                 <div className="grid md:grid-cols-3 gap-8">
                     {/* Community */}
-                    <Card>
-                        <CardContent className="p-6 text-center">
-                            <FaUsers className="text-green-600 text-4xl mx-auto mb-4" />
-                            <h3 className="text-xl font-semibold mb-2">Cộng đồng</h3>
-                            <p className="text-gray-600 mb-4">
-                                Tiếp nhận và cập nhật thông tin các trạm sạc do người dùng chia sẻ. Thông tin được kiểm tra và xác minh.
-                            </p>
-                        </CardContent>
-                    </Card>
+                    <div className="bg-white rounded-xl p-8 text-center shadow-none hover:shadow-lg transition-all duration-300">
+                        <FaUsers className="text-green-600 text-5xl mx-auto mb-6" />
+                        <h3 className="text-2xl font-bold mb-4 text-gray-800">Cộng đồng</h3>
+                        <p className="text-gray-600 leading-relaxed">
+                            Trên tạm gia chút trừ thông tin các trạm sức do người đứng chia sẻ, giáo gia đứng tìm kiếm và dễ dàng.
+                        </p>
+                    </div>
 
                     {/* Business */}
-                    <Card>
-                        <CardContent className="p-6 text-center">
-                            <FaBuilding className="text-green-600 text-4xl mx-auto mb-4" />
-                            <h3 className="text-xl font-semibold mb-2">Doanh nghiệp</h3>
-                            <p className="text-gray-600 mb-4">
-                                Thông tin về tài chính và chính sách thanh toán. Giúp doanh nghiệp tìm hiểu điểm sạc phù hợp.
-                            </p>
-                        </CardContent>
-                    </Card>
+                    <div className="bg-white rounded-xl p-8 text-center shadow-none hover:shadow-lg transition-all duration-300">
+                        <FaBuilding className="text-green-600 text-5xl mx-auto mb-6" />
+                        <h3 className="text-2xl font-bold mb-4 text-gray-800">Doanh nghiệp</h3>
+                        <p className="text-gray-600 leading-relaxed">
+                            Cung cấp thông tin về hệ thống trạm sức của các doanh nghiệp tiến toàn quốc hội trong những tạm suốn điểm lực phù hợp.
+                        </p>
+                    </div>
 
                     {/* Groups */}
-                    <Card>
-                        <CardContent className="p-6 text-center">
-                            <FaUserFriends className="text-green-600 text-4xl mx-auto mb-4" />
-                            <h3 className="text-xl font-semibold mb-2">Hội nhóm</h3>
-                            <p className="text-gray-600 mb-4">
-                                Thông tin các trạm sạc được quản lý bởi các tổ chức, xây dựng tiêu chuẩn và quyền sử dụng.
-                            </p>
-                        </CardContent>
-                    </Card>
+                    <div className="bg-white rounded-xl p-8 text-center shadow-none hover:shadow-lg transition-all duration-300">
+                        <FaUserFriends className="text-green-600 text-5xl mx-auto mb-6" />
+                        <h3 className="text-2xl font-bold mb-4 text-gray-800">Hội nhóm</h3>
+                        <p className="text-gray-600 leading-relaxed">
+                            Hiểu thị thông tin các trạm sức được quản lý tài các nhóm, từ chức, giáp thẩm nhanh đã khác giáp đầu và sử dụng.
+                        </p>
+                    </div>
                 </div>
             </section>
 
@@ -136,7 +130,7 @@ const Home = () => {
                         <img
                             src={managementImage}
                             alt="Hệ thống quản lý trạm sạc"
-                            className="w-full h-auto rounded-xl shadow-md object-cover border border-gray-200"
+                            className="w-full h-auto rounded-xl object-cover border border-gray-200"
                         />
                     </div>
 
@@ -241,7 +235,7 @@ const Home = () => {
             </section>
 
             {/* Simplified Footer Section */}
-            <footer className="bg-white py-8 border-t">
+            <footer className="bg-white py-8 border-t border-gray-300 my-4">
                 <div className="max-w-6xl mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-gray-700">
 
@@ -288,12 +282,11 @@ const Home = () => {
                                 <li>--</li>
                             </ul>
                             <div className="flex space-x-4">
-                                <img src={AppStore} alt="App Store" className="h-10" />
-                                <img src={GooglePlay} alt="Google Play" className="h-10" />
+                                <AppStore />
+                                <GooglePlay />
                             </div>
                         </div>
                     </div>
-
                     {/* Dòng dưới cùng */}
                     <div className="mt-6 border-t pt-4 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
                         <p>@loccdaynha</p>
