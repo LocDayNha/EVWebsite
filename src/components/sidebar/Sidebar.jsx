@@ -42,7 +42,7 @@ const Sidebar = ({ setNumberL }) => {
                 </svg>
             </button>
 
-            <aside id="logo-sidebar" className=" w-64 h-screen transition-transform sm:translate-x-0 bg-gray-800 text-white" aria-label="Sidebar">
+            <aside id="logo-sidebar" className=" w-64 h-full transition-transform sm:translate-x-0 bg-gray-800 text-white" aria-label="Sidebar">
                 <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
                     <a href="*" className="flex items-center ps-2.5 mb-5">
                         <img src={"https://i.pinimg.com/736x/8f/26/98/8f26983fbfc696d5fc13ddf6e45551a3.jpg"} className="h-12 w-12 mr-3 rounded-full" alt="Logo" />

@@ -85,13 +85,10 @@ const Station = ({ filteredData, number, getData }) => {
         }
     }, [textSearch]);
 
-
-    const logData = () => {
-
-    }
     return (
-        <div>
+        <div className="max-h-screen overflow-y-auto">
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+
                 <thead className="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" className="px-6 py-3">
@@ -207,7 +204,7 @@ const Station = ({ filteredData, number, getData }) => {
                                 <td className="pl-4 py-4">
                                     <img src={item.image} className="w-80 h-50 object-cover" />
                                 </td>
-                                <td className="text-center pl-6 py-4 w-50 font-medium text-gray-900 dark:text-white" onClick={logData}>
+                                <td className="text-center pl-6 py-4 w-50 font-medium text-gray-900 dark:text-white">
                                     {item.name}
                                 </td>
                                 <td className="pl-6 py-4 text-center w-60 font-medium text-gray-900 dark:text-white">
@@ -371,6 +368,7 @@ const Station = ({ filteredData, number, getData }) => {
                         ))
                     )}
                 </tbody>
+
             </table>
             {
                 checkAlertComfirm ?
