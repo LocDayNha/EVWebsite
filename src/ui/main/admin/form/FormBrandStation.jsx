@@ -17,6 +17,7 @@ const FormBrandStation = () => {
     return (
         <div className='w-full'>
             <FormBasicVerOne
+                urlAddData='/brand/addNew'
                 title='Hãng trạm sạc'
                 placeholder='Tên hãng'
                 dataName={setDataName}

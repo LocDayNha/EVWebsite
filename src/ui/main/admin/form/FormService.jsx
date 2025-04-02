@@ -17,6 +17,7 @@ const FormService = () => {
     return (
         <div className='w-full'>
             <FormBasicVerOne
+                urlAddData='/services/addNew'
                 title='Dịch vụ'
                 placeholder='Tên dịch vụ'
                 dataName={setDataName}

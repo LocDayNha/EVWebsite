@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
+import AxiosInstance from '../util/AxiosInstance';
 
 const CheckBox = (props) => {
 
-  const { data, selectedData } = props;
+  const { data, selectedData ,title} = props;
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCheckBox, setSelectedCheckBox] = useState([]);
@@ -21,9 +22,10 @@ const CheckBox = (props) => {
     selectedData?.(selectedCheckBox);
   }, [selectedCheckBox, selectedData]);
 
+
   return (
     <div className="w-full mt-1">
-      <span className="text-gray-700 after:ml-0.5 after:text-red-500 after:content-['*']">Check Box</span>
+      <span className="text-gray-700 after:ml-0.5 after:text-red-500 after:content-['*']">{title}</span>
 
       <button
         onClick={() => setIsOpen(!isOpen)}

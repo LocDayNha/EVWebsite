@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
+import AxiosInstance from '../util/AxiosInstance';
 
 const Radio = (props) => {
 
-  const { data, selectedData, checkValidation, value } = props;
+  const { selectedData, checkValidation, value, data } = props;
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedRadio, setSelectedRadio] = useState(value || null);
@@ -14,6 +15,8 @@ const Radio = (props) => {
   useEffect(() => {
     setSelectedRadio(value);
   }, [value]);
+
+
 
   return (
     <div className="w-full mt-1">
@@ -31,7 +34,7 @@ const Radio = (props) => {
             null
           }
           <span>{selectedRadio?.name || 'Chưa chọn'}</span>
-        </div>  
+        </div>
         <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
           <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
         </svg>
