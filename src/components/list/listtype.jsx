@@ -179,7 +179,7 @@ const ListType = ({ title, content1, urlGetData, urlUpdateStatus, titleAlert, me
                                 </tr>
                             ) : (
                                 sortedData.map((item, index) => (
-                                    <tr key={index} className="border-b dark:border-gray-700">
+                                    <tr key={index} className="border-b border-gray-200 dark:border-gray-700">
                                         <td className="pl-4 py-4">
                                             {item.image && item.image !== "" ? <img src={item.image} alt={item.name} className="w-12 h-12 object-cover" /> : null}
 

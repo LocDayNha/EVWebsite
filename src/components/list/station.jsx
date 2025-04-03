@@ -202,12 +202,12 @@ const Station = ({ filteredData, number, getData }) => {
 
                             <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
                                 <td className="pl-4 py-4">
-                                    <img src={item.image} className="w-80 h-50 object-cover" />
+                                    <img src={item.image} className="w-50 h-30 object-cover" />
                                 </td>
-                                <td className="text-center pl-6 py-4 w-50 font-medium text-gray-900 dark:text-white">
+                                <td className="text-center pl-6 py-4 w-40 font-medium text-gray-900 dark:text-white">
                                     {item.name}
                                 </td>
-                                <td className="pl-6 py-4 text-center w-60 font-medium text-gray-900 dark:text-white">
+                                <td className="pl-6 py-4 text-center w-40 font-medium text-gray-900 dark:text-white">
                                     {item.location}
                                 </td>
                                 <td className="py-4 text-center font-medium text-gray-900 dark:text-white">

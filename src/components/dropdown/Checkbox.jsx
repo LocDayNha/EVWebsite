@@ -3,10 +3,10 @@ import AxiosInstance from '../util/AxiosInstance';
 
 const CheckBox = (props) => {
 
-  const { data, selectedData ,title} = props;
+  const { data, selectedData, checkValidation, value } = props;
 
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedCheckBox, setSelectedCheckBox] = useState([]);
+  const [selectedCheckBox, setSelectedCheckBox] = useState(value || []);
 
   const handleCheckboxChange = (option) => {
     setSelectedCheckBox((prev) => {
@@ -22,14 +22,17 @@ const CheckBox = (props) => {
     selectedData?.(selectedCheckBox);
   }, [selectedCheckBox, selectedData]);
 
+  useEffect(() => {
+    setSelectedCheckBox(value);
+  }, [value]);
 
   return (
     <div className="w-full mt-1">
-      <span className="text-gray-700 after:ml-0.5 after:text-red-500 after:content-['*'] dark:text-white">{title}</span>
+      <span className="text-gray-700 after:ml-0.5 after:text-red-500 after:content-['*'] dark:text-white">{props.title}</span>
 
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full dark:text-white border border-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 flex justify-between items-center dark:bg-gray-600 dark:hover:bg-gray-700"
+        className={`w-full mt-1 dark:text-white border ${checkValidation === true ? "border-red-500" : "border-gray-300"} font-medium rounded-lg text-sm px-5 py-2.5 flex justify-between items-center dark:bg-gray-600 dark:hover:bg-gray-700`}
         type="button"
       >
         <span>

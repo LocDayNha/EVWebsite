@@ -43,7 +43,7 @@ const Navigator = () => {
 
             <Route path='/admin/home' element={<HomeAdmin />} />
 
-            <Route path='/liststation' element={<ListStation />} />
+            {/* <Route path='/liststation' element={<ListStation />} />
             <Route path='/listaddress' element={<ListAddress />} />
             <Route path='/listbrandcar' element={<ListBrandCar />} />
             <Route path='/listbrandstation' element={<ListBrandStation />} />
@@ -57,7 +57,7 @@ const Navigator = () => {
             <Route path='/formbrandstation' element={<FormBrandStation />} />
             <Route path='/formport' element={<FormPort />} />
             <Route path='/formservice' element={<FormService />} />
-            <Route path='/formvehicle' element={<FormVehicle />} />
+            <Route path='/formvehicle' element={<FormVehicle />} /> */}
 
             <Route path='/test' element={<Test />} />
             <Route path="*" element={<Error404 />} />
