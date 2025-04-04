@@ -8,6 +8,7 @@ import Radio from '../dropdown/Radio';
 import Specification from './Specification';
 import CheckBox from '../dropdown/Checkbox';
 import AxiosInstance from '../util/AxiosInstance';
+import MyMap from '../item/MyMap';
 
 const Station = (props) => {
 
@@ -21,6 +22,8 @@ const Station = (props) => {
     const [service, setService] = useState(null);
     const [brandCar, setBrandCar] = useState(null);
     const [note, setNote] = useState(null);
+    const[lat, setLat] = useState(null);
+    const[lng, setLng] = useState(null);
 
     const [checkValidationImage, setCheckValidationImage] = useState(false);
     const [checkValidationName, setCheckValidationName] = useState(false);
@@ -31,6 +34,7 @@ const Station = (props) => {
     const [checkValidationService, setCheckValidationService] = useState(false);
     const [checkValidationBrandCar, setCheckValidationBrandCar] = useState(false);
     const [checkValidationNote, setCheckValidationNote] = useState(false);
+    const [checkMap, setCheckMap] = useState(false);
 
     const [dataBrandCar, setDataBrandCar] = useState([]);
     const [dataAddress, setDataAddress] = useState([]);
@@ -215,11 +219,15 @@ const Station = (props) => {
                     value={name || ''}
                     onChange={e => setName(e.target.value)}
                     checkValidation={checkValidationName} />
-                <TextInputText
+                <MyMap
                     title='Địa chỉ trạm sạc'
-                    placeholder='Chọn địa chỉ'
-                    value={location || ''}
-                    onChange={e => setLocation(e.target.value)}
+                    value={location || 'Chọn địa điểm '}
+                    onChange={() => { setCheckMap(true); }}
+                    checkMap={checkMap}
+                    setCheckMap={setCheckMap}
+                    setLocation={setLocation}
+                    setLat={setLat}
+                    setLng={setLng}
                     checkValidation={checkValidationLocation} />
                 <Radio
                     title='Nơi đặt trạm sạc'
