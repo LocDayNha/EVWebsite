@@ -26,6 +26,7 @@ import FormService from '../../ui/main/admin/form/FormService';
 import FormVehicle from '../../ui/main/admin/form/FormVehicle';
 
 import Test from '../../ui/test/Test';
+import Test2 from '../../ui/test/Test2';
 
 import Error404 from '../../ui/main/Error404';
 
@@ -60,6 +61,7 @@ const Navigator = () => {
             <Route path='/formvehicle' element={<FormVehicle />} /> */}
 
             <Route path='/test' element={<Test />} />
+            <Route path='/test2' element={<Test2 />} />
             <Route path="*" element={<Error404 />} />
         </Routes>
     );
