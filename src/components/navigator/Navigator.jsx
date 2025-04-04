@@ -28,6 +28,7 @@ import FormVehicle from '../../ui/main/admin/form/FormVehicle';
 import Test from '../../ui/test/Test';
 
 import Error404 from '../../ui/main/Error404';
+import TestByLoc from '../../ui/test/locdaynha//TestByLoc';
 
 const Navigator = () => {
     return (
@@ -43,23 +44,8 @@ const Navigator = () => {
 
             <Route path='/admin/home' element={<HomeAdmin />} />
 
-            {/* <Route path='/liststation' element={<ListStation />} />
-            <Route path='/listaddress' element={<ListAddress />} />
-            <Route path='/listbrandcar' element={<ListBrandCar />} />
-            <Route path='/listbrandstation' element={<ListBrandStation />} />
-            <Route path='/listport' element={<ListPort />} />
-            <Route path='/listservice' element={<ListService />} />
-            <Route path='/listvehicle' element={<ListVehicle />} />
-
-            <Route path='/formstation' element={<FormStation />} />
-            <Route path='/formaddress' element={<FormAddress />} />
-            <Route path='/formbrandcar' element={<FormBrandCar />} />
-            <Route path='/formbrandstation' element={<FormBrandStation />} />
-            <Route path='/formport' element={<FormPort />} />
-            <Route path='/formservice' element={<FormService />} />
-            <Route path='/formvehicle' element={<FormVehicle />} /> */}
-
             <Route path='/test' element={<Test />} />
+            <Route path='/loctest' element={<TestByLoc />} />
             <Route path="*" element={<Error404 />} />
         </Routes>
     );
