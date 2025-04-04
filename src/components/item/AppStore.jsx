@@ -3,7 +3,7 @@ import appleLogo from "../../assets/image/item/apple.png";
 
 const AppStore = () => {
     return (
-        <div className='mt-3.5'>
+        <div className='w-auto mt-3.5'>
             <a
                 href="*"
                 target="_blank"

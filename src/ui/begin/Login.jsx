@@ -136,7 +136,7 @@ const Login = () => {
                     </div>
 
                     {/* Nút tải ứng dụng */}
-                    <div className="flex space-x-4 mt-4">
+                    <div className="flex space-x-4 mt-4 ">
                         <AppStore />
                         <GooglePlay />
                     </div>

@@ -10,11 +10,27 @@ import image2 from "../../../assets/image/main/home/image2.png"
 import image3 from "../../../assets/image/main/home/image3.png"
 import AppStore from "../../../../src/components/item/AppStore"
 import GooglePlay from "../../../../src/components/item/GooglePlay"
+import vinfastLogo from "../../../../src/assets/image/main/home/vinfast.png"
+import toyotaLogo from "../../../../src/assets/image/main/home/toyota.svg"
+import evoneLogo from "../../../../src/assets/image/main/home/evone.png"
+import huyndaiLogo from "../../../../src/assets/image/main/home/huyndai.png"
+import hondaLogo from "../../../../src/assets/image/main/home/honda.png"
+import suzukiLogo from "../../../../src/assets/image/main/home/suzuki.png"
+import bitcarLogo from "../../../../src/assets/image/main/home/bitcar.png"
 
 
 const Home = () => {
     const [loading, setLoading] = useState(true);
     const { Card, CardContent } = CardComponents;
+    const chargingBrands = [
+        { id: 1, name: "VinFast", logo: vinfastLogo },
+        { id: 2, name: "Toyota", logo: toyotaLogo },
+        { id: 3, name: "EVOne", logo: evoneLogo },
+        { id: 4, name: "Hyundai", logo: huyndaiLogo },
+        { id: 5, name: "Honda", logo: hondaLogo },
+        { id: 6, name: "Suzuki", logo: suzukiLogo },
+        { id: 7, name: "Bitcar", logo: bitcarLogo },
+    ];
 
     useEffect(() => {
         setTimeout(() => setLoading(false), 1000);
@@ -78,14 +94,20 @@ const Home = () => {
                 </div>
 
                 <div className="flex justify-between gap-6 max-w-xl mx-auto mb-[29px]">
-                    {/* 7 nút tròn đơn giản */}
-                    <button className="w-12 h-12 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"></button>
-                    <button className="w-12 h-12 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"></button>
-                    <button className="w-12 h-12 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"></button>
-                    <button className="w-12 h-12 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"></button>
-                    <button className="w-12 h-12 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"></button>
-                    <button className="w-12 h-12 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"></button>
-                    <button className="w-12 h-12 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors"></button>
+                    {chargingBrands.map((brand) => (
+                        <button
+                            key={brand.id}
+                            className="w-12 h-12 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors flex items-center justify-center p-2 group"
+                            aria-label={brand.name}
+                            title={brand.name}
+                        >
+                            <img
+                                src={brand.logo}
+                                alt={brand.name}
+                                className="w-full h-full object-contain group-hover:scale-110 transition-transform"
+                            />
+                        </button>
+                    ))}
                 </div>
 
                 <div className="text-center mb-12">
