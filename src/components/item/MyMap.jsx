@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 
 const libraries = ["places"]; 
-const containerStyle = { width: "500px", height: "500px" };
+const containerStyle = { width: "100%", height: "500px" };
 const center = { lat: 21.0285, lng: 105.8542 }; 
 
 const MyMap = () => {
