@@ -9,14 +9,15 @@ import NotificationAlert from '../alert/NotificationAlert';
 
 const Specification = (props) => {
 
-    const { onChange, checkValidation, value } = props;
+    const { onChange, value, setListSepc } = props;
 
+    const [idUpdate, setIdUpdate] = useState(null);
     const [alert, setAlert] = useState(null);
     const [kw, setKw] = useState(null);
     const [slot, setSlot] = useState(null);
     const [price, setPrice] = useState(null);
     const [port, setPort] = useState(null);
-    const [vehicle, setVehicle] = useState([]);
+    const [vehicle, setVehicle] = useState(null);
 
     const [listSpecification, setListSpecification] = useState([]);
 
@@ -25,11 +26,15 @@ const Specification = (props) => {
     const [checkValidationPrice, setCheckValidationPrice] = useState(false);
     const [checkValidationPort, setCheckValidationPort] = useState(false);
     const [checkValidationVehicle, setCheckValidationVehicle] = useState(false);
+    const [checkButtonEdit, setCheckButtonEdit] = useState(false);
 
     const [openViewSpecification, setOpenViewSpecification] = useState(false);
 
     const [dataVehicle, setDataVehicle] = useState([]);
     const [dataPort, setDataPort] = useState([]);
+
+
+    const [selectedVehical, setSelectedVehicle] = useState([]);
 
     const getDataVehicle = async () => {
         try {
@@ -53,6 +58,83 @@ const Specification = (props) => {
             }
         } catch (error) {
             console.error("Lỗi khi lấy dữ liệu:", error);
+        }
+    };
+
+    const addNewSpecification = async () => {
+        try {
+
+            const formattedVehical = selectedVehical.map(item => ({ vehicle_id: item._id }));
+            const dataSpecification = await AxiosInstance().post('/specification/addNew',
+                {
+                    user_id: '67b57c10e901575e8cbeffbe', vehicle: formattedVehical, port_id: port._id, kw: kw, slot: slot, price: price
+                });
+
+
+
+            if (dataSpecification.data) {
+                console.log('Thêm mới thành công:', dataSpecification.data);
+                const vehicleInfo = dataSpecification.data.vehicle.map(v => ({
+                    vehicle_id: v.vehicle_id._id,
+                    vehicle_name: v.vehicle_id.name,
+                    _id: v._id,
+                }));
+
+                const newData = {
+                    ...dataSpecification.data,
+                    vehicle: vehicleInfo,
+                };
+                setListSpecification(prevList => [...prevList, newData]);
+
+                clearForm();
+                setOpenViewSpecification(false);
+
+            } else {
+                console.log('Không tìm thấy dữ liệu từ /specification/addNew');
+            }
+
+        } catch (error) {
+            console.error('Lỗi khi lấy dữ liệu Specification:', error);
+        }
+    };
+    const updateSpecificationById = async () => {
+        try {
+            const formattedVehical = selectedVehical.map(item => ({ vehicle_id: item._id }));
+            const response = await AxiosInstance().post('/specification/update', {
+                id: idUpdate,
+                vehicle: formattedVehical,
+                port_id: port?._id,
+                kw: kw,
+                slot: slot,
+                price: price
+            });
+            if (response.data) {
+                const vehicleInfo = response.data.vehicle.map(v => ({
+                    vehicle_id: v.vehicle_id._id,
+                    vehicle_name: v.vehicle_id.name,
+                    _id: v._id,
+                }));
+                console.log('vehicleInfo : ', vehicleInfo)
+                const newData = {
+                    ...response.data,
+                    vehicle: vehicleInfo,
+                };
+                setListSpecification(prevList =>
+                    prevList.map(item => item._id === idUpdate ? newData : item)
+                );
+                clearForm();
+                setCheckButtonEdit(false)
+                setOpenViewSpecification(false);
+            } else {
+                console.error('Thất bại');
+                setOpenViewSpecification(false);
+                setCheckButtonEdit(false)
+            }
+        } catch (error) {
+            console.error("Lỗi khi cập nhật Specification:", error.response?.data || error.message);
+            clearForm();
+            setCheckButtonEdit(false)
+            setOpenViewSpecification(false);
         }
     };
 
@@ -87,7 +169,7 @@ const Specification = (props) => {
         setSlot(null);
         setPrice(null);
         setPort(null);
-        setVehicle([]);
+        setSelectedVehicle([]);
     }
 
     const validation = async () => {
@@ -138,7 +220,7 @@ const Specification = (props) => {
             setCheckValidationPort(false);
         }
 
-        if (vehicle.length <= 0) {
+        if (selectedVehical.length <= 0) {
             setCheckValidationVehicle(true);
             showToast('error', 'Không được bỏ trống phương tiện');
             isValid = false;
@@ -149,8 +231,7 @@ const Specification = (props) => {
         if (!isValid) {
             return;
         }
-
-        handleAdd();
+        await addNewSpecification();
         setAlert(null);
 
     }
@@ -161,7 +242,7 @@ const Specification = (props) => {
             slot,
             price,
             port: port ? port : 'N/A',
-            vehicle: vehicle.length > 0 ? vehicle : 'N/A'
+            vehicle: selectedVehical.length > 0 ? selectedVehical : 'N/A'
         };
 
         setListSpecification(prevList => [...prevList, newSpecification]);
@@ -170,17 +251,63 @@ const Specification = (props) => {
         setOpenViewSpecification(false);
     };
 
-    const handleEdit = (index) => {
-        console.log("Chỉnh sửa mục:", listSpecification[index]);
+    const setDataEdit = (index) => {
+        clearForm();
+        setCheckButtonEdit(true);
+        setIdUpdate(index);
+        const itemToEdit = listSpecification.find(item => item._id === index);
+        if (!itemToEdit) return;
+        setKw(itemToEdit.kw);
+        setSlot(itemToEdit.slot);
+        setPrice(itemToEdit.price);
+        setPort(itemToEdit.port_id);
+        setSelectedVehicle(itemToEdit.vehicle.map(v => ({ name: v.vehicle_name, _id: v.vehicle_id })));
+        setOpenViewSpecification(true);
     };
 
+
+
     const handleDelete = (index) => {
-        if (window.confirm("Bạn có chắc muốn xóa?")) {
-            const newList = [...listSpecification];
-            newList.splice(index, 1);
-            setListSpecification(newList);
-        }
+
+        const newList = [...listSpecification];
+        newList.splice(index, 1);
+        setListSpecification(newList);
     };
+    const deleteSpecificationById = async (id) => {
+        try {
+            if (window.confirm("Bạn có chắc muốn xóa?")) {
+                const dataSpecificationById = await AxiosInstance().delete('/specification/deleteById',
+                    {
+                        data: { id }
+                    });
+
+                if (dataSpecificationById) {
+                    console.log('Xóa SpecificationById thành công')
+
+                    handleDelete(id);
+                } else {
+
+                    console.log('Không tìm thấy dữ liệu từ /specification/addNew');
+                }
+            }
+        } catch (error) {
+            console.error('Lỗi khi lấy dữ liệu Specification:', error);
+
+        }
+    }
+    useEffect(() => {
+        if (listSpecification.length > 0) {
+            setListSepc(listSpecification)
+        }
+    }, [listSpecification]);
+    // useEffect(() => {
+    //     console.log("vehicle : ", selectedVehical);
+    //     //console.log("port : ", port?._id);
+    // }, [selectedVehical]);
+    // useEffect(() => {
+    //     console.log('listSpecification : ', listSpecification);
+
+    // }, [listSpecification]);
 
     return (
         <div className="w-full mt-3 mb-3 flex-col items-center">
@@ -196,7 +323,7 @@ const Specification = (props) => {
 
                     <div className='w-160 p-3 rounded-2xl bg-white dark:bg-gray-700'>
 
-                        <button className='hover:text-red-500' onClick={() => setOpenViewSpecification(false)}>
+                        <button className='hover:text-red-500' onClick={() => { setOpenViewSpecification(false); clearForm(); }}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                                 <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z" clipRule="evenodd" />
                             </svg>
@@ -240,19 +367,26 @@ const Specification = (props) => {
                                     title='Cổng sạc'
                                     value={port || null}
                                     selectedData={setPort}
-                                    checkValidation={checkValidationPort} />
+                                    checkValidation={checkValidationPort}
+                                />
                             </div>
                             <div className='w-2/5'>
                                 <CheckBox
                                     data={dataVehicle}
                                     title='Loại phương tiện'
-                                    value={vehicle || []}
-                                    selectedData={setVehicle}
-                                    checkValidation={checkValidationVehicle} />
+                                    selectedCheckBox={selectedVehical}
+                                    setSelectedCheckBox={setSelectedVehicle}
+                                    checkValidation={checkValidationVehicle}
+                                />
+
                             </div>
                         </div>
+                        {checkButtonEdit ?
+                            <Button title='Cập nhật' onClick={updateSpecificationById} />
+                            :
+                            <Button title='Xác nhận' onClick={validation} />
+                        }
 
-                        <Button title='Xác nhận' onClick={validation} />
 
                     </div>
 
@@ -264,7 +398,7 @@ const Specification = (props) => {
             }
 
             <div className="flex flex-col items-center mt-3">
-                {listSpecification.length === 0 ? (
+                {listSpecification?.length === 0 ? (
                     <span className="text-gray-700 after:ml-0.5 after:text-red-500 after:content-['*'] dark:text-white">
                         Chưa có danh sách trụ sạc
                     </span>
@@ -286,17 +420,18 @@ const Specification = (props) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {listSpecification.map((data, index) => (
+                            {listSpecification?.map((data, index) => (
                                 <tr key={index} className="border border-gray-300 text-center">
                                     <td className="border border-gray-300 px-2 py-2">{data.kw || 'N/A'}</td>
                                     <td className="border border-gray-300 px-2 py-2">{data.slot || 'N/A'}</td>
                                     <td className="border border-gray-300 px-2 py-2">
                                         {data.price ? new Intl.NumberFormat('vi-VN').format(data.price) : 'N/A'}
                                     </td>
-                                    <td className="border border-gray-300 px-2 py-2">{data.port.type || 'N/A'} - {data.port.name || 'N/A'}</td>
-                                    <td className="border border-gray-300 px-2 py-2">{data.vehicle.length > 1 ? 'Tất cả' : data.vehicle[0].name}</td>
+                                    <td className="border border-gray-300 px-2 py-2">{data.port_id?.type || 'N/A'} - {data.port_id?.name || 'N/A'}</td>
+                                    <td className="border border-gray-300 px-2 py-2">{data.vehicle.length > 1 ? 'Tất cả' : data.vehicle[0].vehicle_name}</td>
                                     <td className=" items-center justify-between">
                                         <button
+                                            onClick={() => setDataEdit(data._id)}
                                             className=" text-blue-500 px-1 py-1 rounded hover:bg-blue-600 hover:text-white mr-1"
                                         >
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
@@ -304,13 +439,16 @@ const Specification = (props) => {
                                             </svg>
                                         </button>
                                     </td>
-                                    {listSpecification.length <= 1 ?
+                                    {/* tam thoi sua  */}
+                                    {listSpecification.length <= 0 ?
                                         null
                                         :
                                         <td className=" items-center justify-between">
                                             <button
                                                 className="text-red-500 px-1 py-1 rounded hover:bg-red-600 hover:text-white"
-                                                onClick={handleDelete}
+                                                onClick={() =>
+                                                    deleteSpecificationById(data._id)
+                                                }
                                             >
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-5">
                                                     <path fillRule="evenodd" d="M8.75 1A2.75 2.75 0 0 0 6 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 1 0 .23 1.482l.149-.022.841 10.518A2.75 2.75 0 0 0 7.596 19h4.807a2.75 2.75 0 0 0 2.742-2.53l.841-10.52.149.023a.75.75 0 0 0 .23-1.482A41.03 41.03 0 0 0 14 4.193V3.75A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4ZM8.58 7.72a.75.75 0 0 0-1.5.06l.3 7.5a.75.75 0 1 0 1.5-.06l-.3-7.5Zm4.34.06a.75.75 0 1 0-1.5-.06l-.3 7.5a.75.75 0 1 0 1.5.06l.3-7.5Z" clipRule="evenodd" />

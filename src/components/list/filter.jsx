@@ -10,7 +10,7 @@ const formData =
         { "_id": "5", "name": "Đầu sạc" },
         { "_id": "6", "name": "Loại phương tiện" },
 
-        
+
     ]
 
 const Filter = () => {
@@ -133,7 +133,7 @@ const Filter = () => {
                             {data._id == numberList ?
                                 <div
                                     onClick={() => setNumberList(data._id)}
-                                    className="flex items-center w-50 p-4 text-white transition duration-75 rounded-lg pl-5 bg-gradient-to-r from-green-700 to-green-500"
+                                    className="flex items-center w-45 p-4 text-white transition duration-75 rounded-lg pl-5 bg-gradient-to-r from-green-700 to-green-500"
                                 >
                                     {data.name}
 
@@ -141,7 +141,7 @@ const Filter = () => {
                                 :
                                 <div
                                     onClick={() => setNumberList(data._id)}
-                                    className="flex items-center w-50 p-4 text-gray-900 transition duration-75 rounded-lg pl-5 group bg-gray-200 dark:text-white"
+                                    className="flex items-center w-45 p-4 text-gray-900 transition duration-75 rounded-lg pl-5 group bg-gray-200 dark:text-white"
                                 >
                                     {data.name}
 
