@@ -12,13 +12,17 @@ const TimeStation = ({ timeStation, setTimeStation }) => {
             setTimeStation('24/7')
         }
         else {
-            setTimeStation(timeStart + ' - ' + timeEnd)
+            if (timeStart && timeEnd) {
+                setTimeStation(timeStart + ' - ' + timeEnd)
+            } else {
+                setTimeStation(null);
+            }
         }
 
     }, [timeStart, timeEnd, checkButton]);
 
     return (
-        <div className='w-full mt-1'>
+        <div className='w-full'>
             <div>
                 <p className='text-gray-700 after:ml-0.5 after:text-red-500 after:content-["*"] dark:text-white'>
                     Thời gian hoạt động
@@ -30,7 +34,7 @@ const TimeStation = ({ timeStation, setTimeStation }) => {
                         24/7
                     </p>
 
-                    <label className="relative inline-flex items-center cursor-pointer">
+                    <label className="inline-flex items-center cursor-pointer">
                         <input
                             type="checkbox"
                             className="sr-only peer"
@@ -39,9 +43,9 @@ const TimeStation = ({ timeStation, setTimeStation }) => {
                                 setCheckButton(!checkButton);
                             }}
                         />
-                        <div className="w-14 h-8 bg-gray-300 rounded-full peer peer-checked:bg-blue-600 relative transition-all duration-300">
-                            <div className={`absolute left-1 top-1 w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300 
-                    ${checkButton ? "translate-x-6" : "translate-x-0"}`}>
+                        <div className="w-14 h-8 bg-gray-300 peer peer-checked:bg-blue-600 rounded-full transition-all duration-300 flex items-center">
+                            <div className={`w-6 h-6 bg-white rounded-full transition-transform
+                                                ${checkButton ? "translate-x-7" : "translate-x-1"}`}>
                             </div>
                         </div>
                     </label>

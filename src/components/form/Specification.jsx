@@ -300,17 +300,9 @@ const Specification = (props) => {
             setListSepc(listSpecification)
         }
     }, [listSpecification]);
-    // useEffect(() => {
-    //     console.log("vehicle : ", selectedVehical);
-    //     //console.log("port : ", port?._id);
-    // }, [selectedVehical]);
-    // useEffect(() => {
-    //     console.log('listSpecification : ', listSpecification);
-
-    // }, [listSpecification]);
 
     return (
-        <div className="w-full mt-3 mb-3 flex-col items-center">
+        <div className="w-full mb-3 flex-col items-center">
             <div className='w-full flex justify-between items-center'>
                 <span className="text-gray-700 after:ml-0.5 after:text-red-500 after:content-['*'] dark:text-white">Danh sách trụ sạc</span>
                 <div className='' onClick={() => setOpenViewSpecification(true)}>

@@ -31,6 +31,7 @@ const Station = (props) => {
     const [checkValidationLocation, setCheckValidationLocation] = useState(false);
     const [checkValidationAddress, setCheckValidationAddress] = useState(false);
     const [checkValidationBrandStation, setCheckValidationBrandStation] = useState(false);
+    const [checkValidationTime, setCheckValidationTime] = useState(false);
     const [checkValidationSpecification, setCheckValidationSpecification] = useState(false);
     const [checkValidationService, setCheckValidationService] = useState(false);
     const [checkValidationBrandCar, setCheckValidationBrandCar] = useState(false);
@@ -161,11 +162,15 @@ const Station = (props) => {
     }
 
     const logData = () => {
+
+        const formattedLocation = location.split(',').map(part => part.trim()).filter(part => !/^\d{5}$/.test(part)).join(', ');
+        
         console.log('Hình ảnh trạm sạc:', image);
         console.log('Tên trạm sạc:', name);
-        console.log('Địa chỉ trạm sạc:', location);
+        console.log('Địa chỉ trạm sạc:', formattedLocation);
         console.log('Nơi đặt trạm sạc:', address);
         console.log('Hãng trạm sạc:', brandStation);
+        console.log('Thời gian:', timeStation);
         console.log('Trụ sạc:', specification);
         console.log('Dịch vụ:', selectedServices);
         console.log('Hãng xe:', selectedBrandCar);
@@ -267,14 +272,14 @@ const Station = (props) => {
             setCheckValidationBrandStation(false);
         }
         if (!timeStation) {
-            setCheckValidationSpecification(true);
+            setCheckValidationTime(true);
             showToast('error', 'Chưa chọn thời gian');
             isValid = false;
         } else {
-            setCheckValidationSpecification(false);
+            setCheckValidationTime(false);
         }
 
-        if (!specification) {
+        if (specification.length <= 0) {
             setCheckValidationSpecification(true);
             showToast('error', 'Phải có ít nhất một trụ sạc');
             isValid = false;
@@ -287,14 +292,9 @@ const Station = (props) => {
         }
 
         addNewStaion();
-        //logData();
         setAlert(null);
 
     }
-
-    // useEffect(() => {
-    //     logData();
-    // }, [selectedServices, selectedBrandCar]);
 
     return (
         <div className='flex justify-center items-center min-h-screen p-4 dark:bg-gray-900'>
@@ -335,10 +335,14 @@ const Station = (props) => {
                     selectedData={setBrandStation}
                     checkValidation={checkValidationBrandStation}
                 />
-                <TimeStation timeStation={timeStation} setTimeStation={setTimeStation} />
 
+                <div className={`w-full mt-2 ${checkValidationTime ? 'border border-red-500' : ''}`}>
+                    <TimeStation timeStation={timeStation} setTimeStation={setTimeStation} />
+                </div>
 
-                <Specification setListSepc={setSpecification} />
+                <div className={`w-full mt-3 mb-3 ${checkValidationSpecification ? 'border border-red-500' : ''}`}>
+                    <Specification setListSepc={setSpecification} />
+                </div>
 
                 <p>Lựa chọn thêm </p>
 

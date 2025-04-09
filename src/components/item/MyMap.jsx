@@ -89,8 +89,16 @@ const MyMap = (props) => {
 
           {selectedLocation && (
             <div className="mt-4 p-2 bg-gray-200 rounded max-w-[500px] w-full">
-              <p><strong>Tọa độ:</strong> {selectedLocation.lat}, {selectedLocation.lng}</p>
-              <p><strong>Địa chỉ:</strong> {selectedLocation.address}</p>
+              <p><strong>Địa chỉ:</strong> {
+                selectedLocation.address
+                  .split(',')
+                  .map(part => part.trim())
+                  .filter(part => !/^\d{5}$/.test(part))
+                  .join(', ')
+              }</p>
+              <div className="flex items-center justify-center mt-2">
+                <button className="bg-gray-400 p-1 rounded-lg" onClick={() => setCheckMap(false)}>Xác nhận</button>
+              </div>
             </div>
           )}
         </div>
