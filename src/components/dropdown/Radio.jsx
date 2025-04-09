@@ -43,7 +43,12 @@ const Radio = (props) => {
           <ul className="p-3 space-y-1 text-sm text-gray-700 dark:text-white max-h-60 overflow-y-auto">
             {data.map((option) => (
               <li key={option._id}>
-                <div className="flex items-center p-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-400">
+                <div
+                  onClick={() => {
+                    setSelectedRadio(option);
+                    setIsOpen(false);
+                  }}
+                  className="flex items-center p-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-400">
                   <input
                     id={option._id}
                     type="radio"

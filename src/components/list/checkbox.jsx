@@ -22,10 +22,10 @@ const CheckBox = ({ dataL, selectedCheckBox, setSelectedCheckBox }) => {
                     <li key={data._id}>
                         <div
                             onClick={() => handleCheckboxChange(data)}
-                            className="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg pl-5 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                            className="flex items-center p-2 text-gray-900 transition duration-75 rounded-lg pl-1 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                             <div
                                 className="flex items-center justify-between p-2 w-50">
-                                <div className="flex items-center  p-2 rounded-sm hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-400">
+                                <div className="flex items-center  p-2 pl-0 rounded-sm hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-400">
                                     {data.image ?
                                         <img src={data.image} alt={data.name} className="w-5 h-5 ml-2" />
                                         :

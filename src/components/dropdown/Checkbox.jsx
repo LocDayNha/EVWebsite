@@ -3,28 +3,27 @@ import AxiosInstance from '../util/AxiosInstance';
 
 const CheckBox = (props) => {
 
-  const { data, selectedData, checkValidation, value } = props;
+  const { data, checkValidation, selectedCheckBox, setSelectedCheckBox } = props;
 
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedCheckBox, setSelectedCheckBox] = useState(value || []);
 
   const handleCheckboxChange = (option) => {
     setSelectedCheckBox((prev) => {
       if (prev.some((item) => item._id === option._id)) {
         return prev.filter((item) => item._id !== option._id);
       } else {
-        return [...prev, option];
+        return [...prev, { _id: option._id, name: option.name }];
       }
     });
   };
 
-  useEffect(() => {
-    selectedData?.(selectedCheckBox);
-  }, [selectedCheckBox, selectedData]);
+  // useEffect(() => {
+  //   selectedData?.(selectedCheckBox);
+  // }, [selectedCheckBox, selectedData]);
 
-  useEffect(() => {
-    setSelectedCheckBox(value);
-  }, [value]);
+  // useEffect(() => {
+  //   setSelectedCheckBox(value);
+  // }, [value]);
 
   return (
     <div className="w-full mt-1">
@@ -50,7 +49,9 @@ const CheckBox = (props) => {
           <ul className="p-3 space-y-1 text-sm text-gray-700 dark:text-white max-h-60 overflow-y-auto">
             {data.map((option) => (
               <li key={option._id}>
-                <div className="flex items-center p-2 rounded-sm hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-400">
+                <div
+                  onClick={() => handleCheckboxChange(option)}
+                  className="flex items-center p-2 rounded-sm hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-400">
                   <input
                     id={option._id}
                     type="checkbox"

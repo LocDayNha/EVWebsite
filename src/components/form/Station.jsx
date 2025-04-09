@@ -9,21 +9,22 @@ import Specification from './Specification';
 import CheckBox from '../dropdown/Checkbox';
 import AxiosInstance from '../util/AxiosInstance';
 import MyMap from '../item/MyMap';
+import TimeStation from '../item/Time';
+import { firebase } from '../../../config';
 
 const Station = (props) => {
 
     const [alert, setAlert] = useState(null);
-    const [image, setImage] = useState('https://i.pinimg.com/736x/c3/29/56/c329567ecc69042c13c3cb6bc26ee424.jpg');
+    const [image, setImage] = useState(null);
     const [name, setName] = useState(null);
     const [location, setLocation] = useState(null);
     const [address, setAddress] = useState(null);
     const [brandStation, setBrandStation] = useState(null);
-    const [specification, setSpecification] = useState('abcd');
-    const [service, setService] = useState(null);
-    const [brandCar, setBrandCar] = useState(null);
+    const [specification, setSpecification] = useState([]);
     const [note, setNote] = useState(null);
-    const[lat, setLat] = useState(null);
-    const[lng, setLng] = useState(null);
+    const [lat, setLat] = useState(null);
+    const [lng, setLng] = useState(null);
+    const [timeStation, setTimeStation] = useState(null);
 
     const [checkValidationImage, setCheckValidationImage] = useState(false);
     const [checkValidationName, setCheckValidationName] = useState(false);
@@ -40,6 +41,9 @@ const Station = (props) => {
     const [dataAddress, setDataAddress] = useState([]);
     const [dataService, setDataService] = useState([]);
     const [dataBrandStation, setDataBrandStation] = useState([]);
+
+    const [selectedServices, setSelectedService] = useState([]);
+    const [selectedBrandCar, setSelectedBrandCar] = useState([]);
 
     const getDataBrandCar = async () => {
         try {
@@ -118,15 +122,41 @@ const Station = (props) => {
         setAlert(null);
     };
 
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const fileURL = URL.createObjectURL(file);
+            setImage(file);
+        }
+    }
+
+    const uploadImageToFirebase = async (file) => {
+        try {
+            if (!file) {
+                throw new Error('File không hợp lệ.');
+            }
+            const blob = file;
+            const fileName = file.name;
+            const ref = firebase.storage().ref().child(fileName);
+            await ref.put(blob);
+            const downloadURL = await ref.getDownloadURL();
+            console.log(downloadURL);
+            return downloadURL; // Trả về URL của ảnh sau khi upload
+        } catch (error) {
+            console.log("Lỗi upload ảnh:", error);
+            return null;
+        }
+    };
+
     const clearForm = () => {
         setImage(null);
         setName(null);
         setLocation(null);
         setAddress(null);
         setBrandStation(null);
-        setSpecification(null);
-        setService(null);
-        setBrandCar(null);
+        setSpecification([]);
+        setSelectedCheckBox(null);
+        setSelectedBrandCar(null);
         setNote(null);
     }
 
@@ -137,11 +167,60 @@ const Station = (props) => {
         console.log('Nơi đặt trạm sạc:', address);
         console.log('Hãng trạm sạc:', brandStation);
         console.log('Trụ sạc:', specification);
-        console.log('Dịch vụ:', service);
-        console.log('Hãng xe:', brandCar);
+        console.log('Dịch vụ:', selectedServices);
+        console.log('Hãng xe:', selectedBrandCar);
         console.log('Ghi chú:', note);
 
-        clearForm();
+    }
+    const addNewStaion = async () => {
+
+        try {
+            const uploadImg = await uploadImageToFirebase(image);
+            if (uploadImg) {
+                const formattedServices = selectedServices ? selectedServices.map(item => ({ service_id: item._id })) : null;
+                const formattedBrandCar = selectedBrandCar ? selectedBrandCar.map(item => ({ brandcar_id: item._id })) : null;
+                const formattedSpecifications = specification ? specification.map(item => ({
+                    specification_id: item._id
+                })) : null;
+                try {
+
+                    const payload = {
+                        user_id: '67b57c10e901575e8cbeffbe',
+                        brand_id: brandStation._id,
+                        specification: formattedSpecifications,
+                        image: uploadImg,
+                        name: name,
+                        location: location,
+                        lat: lat,
+                        lng: lng,
+                        time: timeStation,
+                        note: note,
+                        address: address._id,
+                        brandcar: formattedBrandCar,
+                        service: formattedServices
+                    };
+
+                    if (formattedServices !== null) payload.service = formattedServices;
+                    if (formattedBrandCar !== null) payload.brandcar = formattedBrandCar;
+
+                    const dataStation = await AxiosInstance().post('/station/addNew', payload);
+
+                    if (dataStation) {
+                        console.log('Thêm mới dữ liệu Station thành công:');
+                    } else {
+                        console.error('Không tìm thấy dữ liệu Station');
+                    }
+
+                } catch (error) {
+                    console.log('error:', error);
+                }
+            } else {
+                console.log('Thêm ảnh chưa được ')
+            }
+
+        } catch (error) {
+            console.error('Lỗi khi thêm mới dữ liệu Station:', error);
+        }
     }
 
     const validation = async () => {
@@ -187,6 +266,13 @@ const Station = (props) => {
         } else {
             setCheckValidationBrandStation(false);
         }
+        if (!timeStation) {
+            setCheckValidationSpecification(true);
+            showToast('error', 'Chưa chọn thời gian');
+            isValid = false;
+        } else {
+            setCheckValidationSpecification(false);
+        }
 
         if (!specification) {
             setCheckValidationSpecification(true);
@@ -200,10 +286,15 @@ const Station = (props) => {
             return;
         }
 
-        logData();
+        addNewStaion();
+        //logData();
         setAlert(null);
 
     }
+
+    // useEffect(() => {
+    //     logData();
+    // }, [selectedServices, selectedBrandCar]);
 
     return (
         <div className='flex justify-center items-center min-h-screen p-4 dark:bg-gray-900'>
@@ -212,6 +303,7 @@ const Station = (props) => {
                 <TextInputFile
                     title='Hình ảnh'
                     reset={image === null}
+                    onChange={handleFileChange}
                     checkValidation={checkValidationImage} />
                 <TextInputText
                     title='Tên trạm sạc'
@@ -234,30 +326,36 @@ const Station = (props) => {
                     data={dataAddress}
                     value={address || null}
                     selectedData={setAddress}
-                    checkValidation={checkValidationAddress} />
+                    checkValidation={checkValidationAddress}
+                />
                 <Radio
                     title='Hãng trụ sạc'
                     data={dataBrandStation}
                     value={brandStation || null}
                     selectedData={setBrandStation}
-                    checkValidation={checkValidationBrandStation} />
+                    checkValidation={checkValidationBrandStation}
+                />
+                <TimeStation timeStation={timeStation} setTimeStation={setTimeStation} />
 
-                <Specification />
+
+                <Specification setListSepc={setSpecification} />
 
                 <p>Lựa chọn thêm </p>
 
                 <CheckBox
                     title='Dịch vụ'
                     data={dataService}
-                    value={service || []}
-                    selectedData={setService}
-                    checkValidation={checkValidationService} />
+                    checkValidation={checkValidationService}
+                    selectedCheckBox={selectedServices}
+                    setSelectedCheckBox={setSelectedService}
+                />
                 <CheckBox
                     title='Hãng Xe'
                     data={dataBrandCar}
-                    value={brandCar || []}
-                    selectedData={setBrandCar}
-                    checkValidation={checkValidationBrandCar} />
+                    checkValidation={checkValidationBrandCar}
+                    selectedCheckBox={selectedBrandCar}
+                    setSelectedCheckBox={setSelectedBrandCar}
+                />
                 <TextInputText
                     title='Ghi chú'
                     placeholder='Nhập ghi chú'
