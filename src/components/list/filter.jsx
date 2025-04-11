@@ -3,8 +3,8 @@ import AxiosInstance from '../util/AxiosInstance';
 import CheckBox from './checkbox';
 const formData =
     [
-        { "_id": "1", "name": "Hãng xe" },
         { "_id": "2", "name": "Hãng trạm sạc" },
+        { "_id": "1", "name": "Hãng xe" },
         { "_id": "3", "name": "Địa chỉ" },
         { "_id": "4", "name": "Dịch vụ" },
         { "_id": "5", "name": "Đầu sạc" },
@@ -13,8 +13,8 @@ const formData =
 
     ]
 
-const Filter = () => {
-    const [numberList, setNumberList] = useState(1);
+const Filter = ({ dataFilter, setDataFilter, dataStation }) => {
+    const [numberList, setNumberList] = useState(2);
     const [selectedBrandCar, setSelectedBrandCar] = useState([]);
     const [selectedBrandStation, setSelectedBrandStation] = useState([]);
     const [selectedAddress, setSelectedAddress] = useState([]);
@@ -118,6 +118,48 @@ const Filter = () => {
         getDataPort();
         getDataVehicle();
     }, []);
+
+    const logFilter = () => {
+        // console.log('hãng trạm ', selectedBrandStation);
+        // console.log('hãng xe ', selectedBrandCar);
+        // console.log('vị trí  ', selectedAddress);
+        // console.log('xe ', selectedVehicle);
+        // console.log('đầu sạc', selectedPort);
+        // console.log('dịch vụ', selectedService);
+    }
+
+    const filteredItems = dataStation?.filter(item => {
+
+        const matchesBrand = !selectedBrandStation || selectedBrandStation.length === 0 || selectedBrandStation.includes(item.brand_id?._id);
+
+        const matchesBrandCar = !selectedBrandCar || selectedBrandCar.length === 0 ||
+            item.brandcar.some(brandcar => selectedBrandCar.includes(brandcar.brandcar_id?._id));
+
+        const matchesPlace = !selectedAddress || selectedAddress.length === 0 || selectedAddress.includes(item.address?._id);
+
+        const matchesVehicle = !selectedVehicle || selectedVehicle.length === 0 ||
+            item.specification.some(spec =>
+                spec.specification_id.vehicle.some(v =>
+                    selectedVehicle.includes(v.vehicle_id?._id)
+                )
+            );
+
+        const matchesPort = !selectedPort || selectedPort.length === 0 ||
+            item.specification.some(spec => selectedPort.includes(spec.specification_id.port_id?._id));
+
+        const matchesService = !selectedService || selectedService.length === 0 ||
+            item.service.some(service => selectedService.includes(service.service_id?._id));
+
+        return (matchesBrand && matchesPlace && matchesBrandCar && matchesVehicle && matchesPort && matchesService);
+    });
+
+    useEffect(() => {
+        setDataFilter(filteredItems);
+        logFilter();
+    }, [dataStation, selectedBrandStation, selectedBrandCar, selectedAddress, selectedVehicle, selectedPort, selectedService]);
+
+
+
     return (
         <div className='w-full p-10'>
             <div className="flex items-center justify-between mb-4 text-gray-900">
@@ -161,8 +203,9 @@ const Filter = () => {
                         </div>
                     </div>
                 </ul>
-                {numberList == 1 ? <CheckBox selectedCheckBox={selectedBrandCar} setSelectedCheckBox={setSelectedBrandCar} dataL={dataBrandCar} /> : null}
+
                 {numberList == 2 ? <CheckBox selectedCheckBox={selectedBrandStation} setSelectedCheckBox={setSelectedBrandStation} dataL={dataBrandStation} /> : null}
+                {numberList == 1 ? <CheckBox selectedCheckBox={selectedBrandCar} setSelectedCheckBox={setSelectedBrandCar} dataL={dataBrandCar} /> : null}
                 {numberList == 3 ? <CheckBox selectedCheckBox={selectedAddress} setSelectedCheckBox={setSelectedAddress} dataL={dataAddress} /> : null}
                 {numberList == 4 ? <CheckBox selectedCheckBox={selectedService} setSelectedCheckBox={setSelectedService} dataL={dataService} /> : null}
                 {numberList == 5 ? <CheckBox selectedCheckBox={selectedPort} setSelectedCheckBox={setSelectedPort} dataL={dataPort} /> : null}

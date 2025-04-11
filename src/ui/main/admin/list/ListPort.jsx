@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ListType from '../../../../components/list/listType';
 
 const ListPort = () => {
+    const [checkType, setCheckType] = useState(1);
     return (
         <div className='drak:p-4 dark:bg-gray-900 '>
             <ListType
+                urlUpdateData={'/port/update'}
+                checkType={checkType}
                 title={'Đầu sạc'}
                 content1={'Loại đầu sạc'}
                 urlGetData={'/port/getAll'}

@@ -5,6 +5,7 @@ const ListBrandCar = () => {
     return (
         <div className='drak:p-4 dark:bg-gray-900 '>
             <ListType
+                urlUpdateData='brandCar/update'
                 title={'Hãng xe'}
                 content1={'Tên hãng xe'}
                 urlGetData={'/brandcar/getAll'}

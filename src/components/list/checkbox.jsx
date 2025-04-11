@@ -5,14 +5,15 @@ const CheckBox = ({ dataL, selectedCheckBox, setSelectedCheckBox }) => {
 
     const handleCheckboxChange = (option) => {
         setSelectedCheckBox((prev) => {
-            const isSelected = prev.some((item) => item._id === option._id);
+            const isSelected = prev.includes(option._id);
             if (isSelected) {
-                return prev.filter((item) => item._id !== option._id);
+                return prev.filter((id) => id !== option._id);
             } else {
-                return [...prev, option];
+                return [...prev, option._id];
             }
         });
     };
+
 
     // console.log("Selected CheckBox:", selectedCheckBox);
     return (
@@ -41,7 +42,7 @@ const CheckBox = ({ dataL, selectedCheckBox, setSelectedCheckBox }) => {
                                         id={data._id}
                                         type="checkbox"
                                         className="w-4 h-4 text-blue-600 focus:ring-blue-500"
-                                        checked={selectedCheckBox.some((item) => item._id === data._id)}
+                                        checked={selectedCheckBox.includes(data._id)}
                                         onChange={() => handleCheckboxChange(data)}
                                     />
                                 </div>

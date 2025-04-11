@@ -5,6 +5,7 @@ const ListAddress = () => {
     return (
         <div className='drak:p-4 dark:bg-gray-900 '>
             <ListType
+                urlUpdateData='location/update'
                 title={'Vị trí đặt trạm sạc'}
                 content1={'Tên địa chỉ'}
                 urlGetData={'/location/getAll'}

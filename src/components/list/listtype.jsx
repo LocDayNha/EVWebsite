@@ -3,8 +3,12 @@ import AxiosInstance from '../util/AxiosInstance';
 import ConfirmAlert from "../alert/ConfirmAlert";
 import Loading from "../item/Loading";
 import NotificationApiAlert from "../alert/NotificationApiAlert";
+import FormUpdateVerOne from "../item/UpdateVerOne";
+import UpdatePort from "../item/UpdatePort";
+import UpdateVehicle from "../item/UpdateVehicle";
 
-const ListType = ({ title, content1, urlGetData, urlUpdateStatus, titleAlert, messageAlert }) => {
+
+const ListType = ({ title, content1, urlGetData, urlUpdateStatus, checkType, titleAlert, messageAlert, urlUpdateData }) => {
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
@@ -16,6 +20,18 @@ const ListType = ({ title, content1, urlGetData, urlUpdateStatus, titleAlert, me
     const [checkLoading, setCheckLoading] = useState(false);
     const [textMessage, setTextMessage] = useState(null);
     const [checkAlertNotification, setCheckAlertNotification] = useState(false);
+    const [checkEditUpdate, setCheckEditUpdate] = useState(false);
+
+    const [dataName, setDataName] = useState(null);
+    const [dataImage, setDataImage] = useState(null);
+    const [dataId, setDataId] = useState(null);
+
+    const LogData = async () => {
+        console.log('name:', dataName);
+        console.log('image:', dataImage);
+        // setDataName(null);
+        // setDataImage(null);
+    }
 
     const getData = async () => {
         try {
@@ -121,7 +137,7 @@ const ListType = ({ title, content1, urlGetData, urlUpdateStatus, titleAlert, me
         if (textSearch) {
             requestSort(textSearch);
         } else {
-            console.log('Không có KEY');
+            // console.log('Không có KEY');
         }
     }, [textSearch]);
 
@@ -204,12 +220,21 @@ const ListType = ({ title, content1, urlGetData, urlUpdateStatus, titleAlert, me
                                             </label>
                                         </td>
                                         <td className="px-6 py-4 text-right">
-                                            <button className="text-blue-600 hover:underline">Sửa</button>
+                                            <button
+                                                onClick={() => {
+                                                    setCheckEditUpdate(true);
+                                                    setDataId(item._id);
+                                                    setDataName(item.name);
+                                                }}
+                                                className="text-blue-600 hover:underline">
+                                                Sửa
+                                            </button>
                                         </td>
                                     </tr>
                                 ))
                             )}
                         </tbody>
+
 
                     </table>
                     {
@@ -229,6 +254,57 @@ const ListType = ({ title, content1, urlGetData, urlUpdateStatus, titleAlert, me
                                 message={textMessage}
                                 onClose={onClose}
                             /> : null
+                    }
+                    {
+                        checkEditUpdate && !checkType ?
+                            <FormUpdateVerOne
+                                urlUpdateData={urlUpdateData}
+                                title='Cập nhật thông tin '
+                                placeholder='Cập nhật tên'
+                                name={dataName}
+                                setCheckLoading={setCheckLoading}
+                                setDataName={setDataName}
+                                dataImage={setDataImage}
+                                id={dataId}
+                                LogData={LogData}
+                                setCheck={setCheckEditUpdate}
+                            />
+                            :
+                            null
+                    }
+                    {
+                        checkEditUpdate && checkType == 1 ?
+                            <UpdatePort
+                                urlUpdateData={urlUpdateData}
+                                title='Cập nhật thông tin '
+                                placeholder='Cập nhật tên'
+                                name={dataName}
+                                setCheckLoading={setCheckLoading}
+                                setDataName={setDataName}
+                                dataImage={setDataImage}
+                                id={dataId}
+                                LogData={LogData}
+                                setCheck={setCheckEditUpdate}
+                            />
+                            :
+                            null
+                    }
+                    {
+                        checkEditUpdate && checkType == 2 ?
+                            <UpdateVehicle
+                                urlUpdateData={urlUpdateData}
+                                title='Cập nhật thông tin '
+                                placeholder='Cập nhật tên'
+                                name={dataName}
+                                setCheckLoading={setCheckLoading}
+                                setDataName={setDataName}
+                                dataImage={setDataImage}
+                                id={dataId}
+                                LogData={LogData}
+                                setCheck={setCheckEditUpdate}
+                            />
+                            :
+                            null
                     }
                 </>
             }

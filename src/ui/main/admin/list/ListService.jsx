@@ -5,6 +5,7 @@ const ListService = () => {
     return (
         <div className='drak:p-4 dark:bg-gray-900 '>
             <ListType
+                urlUpdateData={'/services/update'}
                 title={'Dịch vụ'}
                 content1={'Tên dịch vụ'}
                 urlGetData={'/services/getAll'}
