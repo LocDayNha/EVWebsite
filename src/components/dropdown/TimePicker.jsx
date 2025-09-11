@@ -10,7 +10,7 @@ const CustomInput = forwardRef(({ value, onClick }, ref) => (
     onClick={onClick}
     placeholder="Chọn giờ"
     readOnly
-    style={{ cursor: "pointer" }}
+    style={{ cursor: "pointer", borderWidth:1 }}
   />
 ));
 

@@ -28,7 +28,7 @@ const TimeStation = ({ timeStation, setTimeStation }) => {
                     Thời gian hoạt động
                 </p>
             </div>
-            <div className=' flex justify-between items-center'>
+            <div className=' flex justify-around items-center'>
                 <div className='items-center justify-center'>
                     <p className='text-center'>
                         24/7
@@ -51,10 +51,10 @@ const TimeStation = ({ timeStation, setTimeStation }) => {
                     </label>
                 </div>
 
-                <div className="flex">
+                <div className="">
                     <TimePicker title="Thời gian bắt đầu" formattedTime={timeStart} setFormattedTime={setTimeStart} />
                 </div>
-                <div className="flex">
+                <div className="">
                     <TimePicker title="Thời gian kết thúc" formattedTime={timeEnd} setFormattedTime={setTimeEnd} />
                 </div>
             </div>
